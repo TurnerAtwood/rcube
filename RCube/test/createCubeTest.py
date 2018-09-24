@@ -24,15 +24,39 @@ class CreateCubeTest(unittest.TestCase):
 # Happy path analysis
 #
 #    inputs: 
-#    outputs:
+#    outputs:    ['green', 'green', 'green', 
+#                    'green', 'green', 'green', 
+#                    'green', 'green', 'green', 
+#                    'yellow', 'yellow', 'yellow', 
+#                    'yellow', 'yellow', 'yellow', 
+#                    'yellow', 'yellow', 'yellow',  
+#                    'blue', 'blue', 'blue', 
+#                    'blue', 'blue', 'blue', 
+#                    'blue', 'blue', 'blue', 
+#                    'white', 'white', 'white', 
+#                    'white', 'white', 'white', 
+#                    'white', 'white', 'white', 
+#                    'red', 'red', 'red', 
+#                    'red', 'red', 'red', 
+#                    'red', 'red', 'red', 
+#                    'orange', 'orange', 'orange', 
+#                    'orange', 'orange', 'orange', 
+#                    'orange', 'orange', 'orange']
 #
 #
 # Happy Path
 
-    def test100_610_ShouldCreateOneElementCube(self):
+#     def test100_610_ShouldCreateOneElementCube(self):
+#         parm = {'op': 'create'}
+#         expectedResult = ['green']
+#         actualResult = RCube.createCube(parm)
+#         self.assertListEqual(expectedResult, actualResult)
+    
+    def test100_620_ShouldCreateMultipleElementCube(self):
         parm = {'op': 'create'}
         expectedResult = ['green']
         actualResult = RCube.createCube(parm)
+        for elementIndex in range(9):
+            self.assertEqual(expectedResult, actualResult[elementIndex])
         self.assertListEqual(expectedResult, actualResult)
-    
-    
+        

@@ -11,5 +11,5 @@ def dispatch(parm={}):
 #---------- inward facing methods ----------
 
 def createCube(parm):
-    cube = []
+    cube = ['green']
     return cube

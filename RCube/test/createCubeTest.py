@@ -23,7 +23,7 @@ class CreateCubeTest(unittest.TestCase):
 #
 # Happy path analysis
 #
-#    inputs: 
+#    inputs:     parm = {'op': 'create'}
 #    outputs:    ['green', 'green', 'green', 
 #                    'green', 'green', 'green', 
 #                    'green', 'green', 'green', 
@@ -43,12 +43,49 @@ class CreateCubeTest(unittest.TestCase):
 #                    'orange', 'orange', 'orange', 
 #                    'orange', 'orange', 'orange']
 #
+#    inputs:     parm = {'op': 'create', 'f': 'purple'}
+#    outputs:    ['purple', 'purple', 'purple', 
+#                    'purple', 'purple', 'purple', 
+#                    'purple', 'purple', 'purple',
+#                    'yellow', 'yellow', 'yellow', 
+#                    'yellow', 'yellow', 'yellow', 
+#                    'yellow', 'yellow', 'yellow',  
+#                    'blue', 'blue', 'blue', 
+#                    'blue', 'blue', 'blue', 
+#                    'blue', 'blue', 'blue', 
+#                    'white', 'white', 'white', 
+#                    'white', 'white', 'white', 
+#                    'white', 'white', 'white', 
+#                    'red', 'red', 'red', 
+#                    'red', 'red', 'red', 
+#                    'red', 'red', 'red', 
+#                    'orange', 'orange', 'orange', 
+#                    'orange', 'orange', 'orange', 
+#                    'orange', 'orange', 'orange']
+#
+#    inputs:
+#    outputs:
+#
+# Sad path analysis
+# 
+#    inputs:
+#    outputs:
 #
 # Happy Path
 
-    def test100_010_ShouldCreateMultipleFaceCube(self):
+    def test100_010_ShouldCreateDefaultCube(self):
         parm = {'op': 'create'}
         expectedFaces = ['green', 'yellow','blue', 'white', 'red', 'orange']
+        actualResult = RCube.createCube(parm)
+        elementIndex = 0
+        for faceColor in expectedFaces:
+            for _ in range(9):
+                self.assertEqual(faceColor, actualResult[elementIndex])
+                elementIndex += 1
+    
+    def test100_020_ShouldCreatePurpleFrontCube(self):
+        parm = {'op': 'create', 'f':'purple'}
+        expectedFaces = ['purple', 'yellow','blue', 'white', 'red', 'orange']
         actualResult = RCube.createCube(parm)
         elementIndex = 0
         for faceColor in expectedFaces:

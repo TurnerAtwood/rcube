@@ -140,7 +140,7 @@ class DispatchTest(unittest.TestCase):
 #      output:  JSON string containing a key of "cube" 
 #
 #      input:   parm having at least one element with a key of "op"        
-#      output:  JSON string containing a key of "cube" 
+#      output:  JSON string containing a the default value for the key 'cube' 
 #
 # Sad path analysis
 #      input:  

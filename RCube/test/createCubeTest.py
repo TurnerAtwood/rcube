@@ -58,4 +58,14 @@ class CreateCubeTest(unittest.TestCase):
         actualResult = RCube.createCube(parm)
         for elementIndex in range(9):
             self.assertEqual(expectedResult, actualResult[elementIndex])
+
+    def test100_630_ShouldCreateMultipleFaceCube(self):
+        parm = {'op': 'create'}
+        expectedFaces = ['green', 'yellow','blue', 'white', 'red', 'orange']
+        actualResult = RCube.createCube(parm)
+        elementIndex = 0
+        for faceColor in expectedFaces:
+            for _ in range(9):
+                self.assertEqual(faceColor, actualResult[elementIndex])
+                elementIndex += 1
         

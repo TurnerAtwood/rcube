@@ -134,7 +134,7 @@ class CreateCubeTest(unittest.TestCase):
                 elementIndex += 1
     
     def test100_070_ShouldCreateBlueFrontGreenRightPurpleBackCube(self):
-        parm = {'op':'create', 'f':'blue', 'r':'green', 'b':''}
+        parm = {'op':'create', 'f':'blue', 'r':'green', 'b':'purple'}
         expectedFaces = ['blue', 'green', 'purple', 'white', 'red', 'orange']
         actualResult = RCube.createCube(parm)
         elementIndex = 0

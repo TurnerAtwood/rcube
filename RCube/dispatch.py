@@ -1,3 +1,4 @@
+DEFAULT_FACE_COLORS = {'f':'green', 'r':'yellow', 'b':'blue', 'l':'white', 't':'red', 'u':'orange'}
 
 def dispatch(parm={}):
     httpResponse = {}
@@ -12,15 +13,10 @@ def dispatch(parm={}):
 
 def createCube(parm):
     cube = []
-    if 'f' in parm :
-        cube += [parm['f']]*9
-    else:
-        cube += ['green']*9
-        
-    if 'r' in parm:    
-        cube += [parm['r']]*9
-    else:
-        cube += ['yellow']*9
-
-    cube += ['blue']*9 +  ['white']*9 + ['red']*9 + ['orange']*9
+    for face in DEFAULT_FACE_COLORS:
+        if face in parm:
+            cube += [parm[face]]*9
+        else:
+            cube += [DEFAULT_FACE_COLORS[face]]*9
+    
     return cube

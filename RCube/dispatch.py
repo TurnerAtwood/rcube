@@ -13,6 +13,8 @@ def dispatch(parm={}):
 def createCube(parm):
     if 'f' in parm :
         cube = [parm['f']]*9 + ['yellow']*9 + ['blue']*9 +  ['white']*9 + ['red']*9 + ['orange']*9
-    else:    
+    elif 'r' in parm:    
+        cube = ['green']*9 + [parm['r']]*9 + ['blue']*9 +  ['white']*9 + ['red']*9 + ['orange']*9
+    else:
         cube = ['green']*9 + ['yellow']*9 + ['blue']*9 +  ['white']*9 + ['red']*9 + ['orange']*9
     return cube

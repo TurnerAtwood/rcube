@@ -58,5 +58,4 @@ class CreateCubeTest(unittest.TestCase):
         actualResult = RCube.createCube(parm)
         for elementIndex in range(9):
             self.assertEqual(expectedResult, actualResult[elementIndex])
-        self.assertListEqual(expectedResult, actualResult)
         

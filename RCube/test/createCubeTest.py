@@ -46,20 +46,7 @@ class CreateCubeTest(unittest.TestCase):
 #
 # Happy Path
 
-#     def test100_610_ShouldCreateOneElementCube(self):
-#         parm = {'op': 'create'}
-#         expectedResult = ['green']
-#         actualResult = RCube.createCube(parm)
-#         self.assertListEqual(expectedResult, actualResult)
-    
-    def test100_620_ShouldCreateMultipleElementCube(self):
-        parm = {'op': 'create'}
-        expectedResult = 'green'
-        actualResult = RCube.createCube(parm)
-        for elementIndex in range(9):
-            self.assertEqual(expectedResult, actualResult[elementIndex])
-
-    def test100_630_ShouldCreateMultipleFaceCube(self):
+    def test100_010_ShouldCreateMultipleFaceCube(self):
         parm = {'op': 'create'}
         expectedFaces = ['green', 'yellow','blue', 'white', 'red', 'orange']
         actualResult = RCube.createCube(parm)

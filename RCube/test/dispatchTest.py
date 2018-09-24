@@ -160,6 +160,18 @@ class DispatchTest(unittest.TestCase):
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         self.assertIn('cube',  resultDict) 
+    
+    def test200_030_ShouldCreateDefaultCubeValue(self):
+        queryString='op=create'
+        expectedFaces = ['green', 'yellow','blue', 'white', 'red', 'orange']
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        actualResult = resultDict['cube']
+        actualElementIndex = 0
+        for faceColor in expectedFaces:
+            for _ in range(9):
+                self.assertEqual(faceColor, actualResult[actualElementIndex])
+                actualElementIndex += 1
         
 # Sad Path
 

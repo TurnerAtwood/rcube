@@ -101,7 +101,7 @@ class DispatchTest(unittest.TestCase):
 #
 # 200 dispatch -- op=create
 # Desired level of confidence is BVA
-# Analysis
+# Input-Output Analysis
 #    inputs:   http:// ... myURL ... /rcube?op=create<options>
 #                where <options> can be zero or one of the following:
 #                  f=<string>    String of length .GT. 0   Optional.   Defaults to "green".  Unvalidated
@@ -132,11 +132,17 @@ class DispatchTest(unittest.TestCase):
 #                    'orange', 'orange', 'orange', 
 #                    'orange', 'orange', 'orange']}        
 # 
-# Happy path 
+# Happy path analysis
 #      input:   parm having at least one element with a key of "op"        
 #      output:  JSON string containing a key of "status" 
+# 
+#      input:   parm having at least one element with a key of "op"        
+#      output:  JSON string containing a key of "cube" 
 #
-# Sad path 
+#      input:   parm having at least one element with a key of "op"        
+#      output:  JSON string containing a key of "cube" 
+#
+# Sad path analysis
 #      input:  
 #      output:  
 #
@@ -154,6 +160,7 @@ class DispatchTest(unittest.TestCase):
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         self.assertIn('cube',  resultDict) 
+        
 # Sad Path
 
 

@@ -8,7 +8,7 @@ def dispatch(parm={}):
         httpResponse['cube'] = createCube(parm)
     return httpResponse
 
-#---------- inward facing meethods ----------
+#---------- inward facing methods ----------
 
 def createCube(parm):
     cube = []

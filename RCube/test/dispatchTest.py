@@ -46,7 +46,7 @@ class DispatchTest(unittest.TestCase):
             result['diagnostic'] = str(e)
         return result
         
-#Acceptance Tests
+# Acceptance Tests
 #
 # 100 dispatch - basic functionality
 # Desired level of confidence: boundary value analysis
@@ -74,13 +74,14 @@ class DispatchTest(unittest.TestCase):
 #
 #
 # Happy path
+
     def test100_010_ShouldReturnSuccessKey(self):
         queryString="op=create"
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         self.assertIn('status', resultDict)
     
-    # Sad path
+# Sad path
     
     def test100_900_ShouldReturnErrorOnEmptyParm(self):
         queryString=""
@@ -95,5 +96,60 @@ class DispatchTest(unittest.TestCase):
         resultDict = self.string2dict(resultString)
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
+
+# Acceptance Tests
+#
+# 200 dispatch -- op=create
+# Desired level of confidence is BVA
+# Analysis
+#    inputs:   http:// ... myURL ... /rcube?op=create<options>
+#                where <options> can be zero or one of the following:
+#                  f=<string>    String of length .GT. 0   Optional.   Defaults to "green".  Unvalidated
+#                  r=<string>    String of length .GT. 0   Optional.   Defaults to "yellow". Unvalidated
+#                  b=<string>    String of length .GT. 0   Optional.   Defaults to "blue".   Unvalidated
+#                  l=<string>    String of length .GT. 0   Optional.   Defaults to "white".  Unvalidated
+#                  t=<string>    String of length .GT. 0   Optional.   Defaults to "red".    Unvalidated
+#                  u=<string>    String of length .GT. 0   Optional.   Defaults to "orange". Unvalidated
+# 
+#    outputs:   default model cube, which is a JSON string: 
+#                 {'status': 'created', 'cube': [
+#                    'green', 'green', 'green', 
+#                    'green', 'green', 'green', 
+#                    'green', 'green', 'green', 
+#                    'yellow', 'yellow', 'yellow', 
+#                    'yellow', 'yellow', 'yellow', 
+#                    'yellow', 'yellow', 'yellow',  
+#                    'blue', 'blue', 'blue', 
+#                    'blue', 'blue', 'blue', 
+#                    'blue', 'blue', 'blue', 
+#                    'white', 'white', 'white', 
+#                    'white', 'white', 'white', 
+#                    'white', 'white', 'white', 
+#                    'red', 'red', 'red', 
+#                    'red', 'red', 'red', 
+#                    'red', 'red', 'red', 
+#                    'orange', 'orange', 'orange', 
+#                    'orange', 'orange', 'orange', 
+#                    'orange', 'orange', 'orange']}        
+# 
+# Happy path 
+#      input:   parm having at least one element with a key of "op"        
+#      output:  JSON string containing a key of "status" 
+#
+# Sad path 
+#      input:  
+#      output:  
+#
+# Happy Path
+
+    def test200_010ShouldCreateDefaultCubeStatus(self):
+        queryString='op=create'
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        self.assertIn('status',  resultDict)
+        self.assertEquals('created', resultDict['status'][0:7])
+
+# Sad Path
+
 
     

@@ -11,5 +11,5 @@ def dispatch(parm={}):
 #---------- inward facing methods ----------
 
 def createCube(parm):
-    cube = ['green']*9
+    cube = ['green']*9 + ['yellow']*9 + ['blue']*9 +  ['white']*9 + ['red']*9 + ['orange']*9
     return cube

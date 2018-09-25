@@ -6,8 +6,11 @@ def dispatch(parm={}):
     if(not('op' in parm)):
         httpResponse['status'] = 'error: missing op'
     elif(parm['op'] == 'create'):
-        if('f' in parm and 'r' in parm and parm['f'] == parm['r']):
-            httpResponse['status'] = 'error: non-unique colors specified'
+        parm.pop('op')
+        uniqueColors = set(parm.values())
+        
+        if(not len(uniqueColors) == len(parm)):
+            httpResponse['status'] = 'error: non-unique color(s) specified'
         else:
             httpResponse['status'] = 'created'
             httpResponse['cube'] = createCube(parm)

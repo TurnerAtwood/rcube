@@ -175,9 +175,15 @@ class DispatchTest(unittest.TestCase):
         
 # Sad path
 
-    def test900_010_ShouldReturnErrorOnNonUniqueColors(self):
-        parm = {'op':'create', 'f':'purple', 'r':'purple'}
+    def test900_010_ShouldReturnErrorOnTwoNonUniqueColors(self):
         queryString="op=create&f=purple&r=purple"
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        self.assertIn('status', resultDict)
+        self.assertEquals('error:',resultDict['status'][0:6])
+        
+    def test900_020_ShouldReturnErrorOnThreeNonUniqueColors(self):
+        queryString="op=create&r=purple&b=purple&l=purple"
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         self.assertIn('status', resultDict)

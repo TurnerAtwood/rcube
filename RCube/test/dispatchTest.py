@@ -190,7 +190,7 @@ class DispatchTest(unittest.TestCase):
         self.assertEquals('error:',resultDict['status'][0:6])
     
     def test900_030_ShouldReturnErrorOnNonUniqueDefaultAndSpecifiedColors(self):
-        queryString="op=create&r=yellow"
+        queryString="op=create&f=yellow"
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         self.assertIn('status', resultDict)

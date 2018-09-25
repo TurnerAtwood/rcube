@@ -6,8 +6,11 @@ def dispatch(parm={}):
     if(not('op' in parm)):
         httpResponse['status'] = 'error: missing op'
     elif(parm['op'] == 'create'):
-        httpResponse['status'] = 'created'
-        httpResponse['cube'] = createCube(parm)
+        if('f' in parm and 'r' in parm and parm['f'] == parm['r']):
+            httpResponse['status'] = 'error: non-unique colors specified'
+        else:
+            httpResponse['status'] = 'created'
+            httpResponse['cube'] = createCube(parm)
     return httpResponse
 
 #---------- inward facing methods ----------

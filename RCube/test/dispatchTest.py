@@ -172,6 +172,30 @@ class DispatchTest(unittest.TestCase):
             for _ in range(9):
                 self.assertEqual(faceColor, actualResult[actualElementIndex])
                 actualElementIndex += 1
+    
+    def test200_030_ShouldCreatePurpleFrontBlackRightCube(self):
+        queryString='op=create&f=purple&r=black'
+        expectedFaces = ['purple', 'black','blue', 'white', 'red', 'orange']
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        actualResult = resultDict['cube']
+        actualElementIndex = 0
+        for faceColor in expectedFaces:
+            for _ in range(9):
+                self.assertEqual(faceColor, actualResult[actualElementIndex])
+                actualElementIndex += 1
+    
+    def test200_030_ShouldCreateSwappedDefaultColorsCube(self):
+        queryString='op=create&f=orange&r=red&t=yellow&u=green'
+        expectedFaces = ['orange', 'red','blue', 'white', 'yellow', 'green']
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        actualResult = resultDict['cube']
+        actualElementIndex = 0
+        for faceColor in expectedFaces:
+            for _ in range(9):
+                self.assertEqual(faceColor, actualResult[actualElementIndex])
+                actualElementIndex += 1
         
 # Sad path
 

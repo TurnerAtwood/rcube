@@ -18,12 +18,11 @@ class CreateCubeTest(unittest.TestCase):
 #        parm:        dictionary of strings to strings; mandatory; validated
 #
 #    outputs:  
-#        dictionary containing a list representing the 54 squares on an unscrambled cube
-#          the colors of the faces may or may not be specified in parm
+#        a list representing the colors of the 54 pieces of a cube specified in parm
 #
 # Happy path analysis
 #
-#    inputs:     parm = {'op': 'create'}
+#    inputs:     parm = {'f':'green', 'r':'yellow', 'b':'blue', 'l':'white', 't':'red', 'u':'orange'}
 #    outputs:    ['green', 'green', 'green', 
 #                    'green', 'green', 'green', 
 #                    'green', 'green', 'green', 
@@ -43,7 +42,7 @@ class CreateCubeTest(unittest.TestCase):
 #                    'orange', 'orange', 'orange', 
 #                    'orange', 'orange', 'orange']
 #
-#    inputs:     parm = {'op': 'create', 'f': 'purple'}
+#    inputs:     parm = {'f':'purple', 'r':'yellow', 'b':'blue', 'l':'white', 't':'red', 'u':'orange'}
 #    outputs:    ['purple', 'purple', 'purple', 
 #                    'purple', 'purple', 'purple', 
 #                    'purple', 'purple', 'purple',

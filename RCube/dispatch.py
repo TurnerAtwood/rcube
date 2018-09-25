@@ -16,7 +16,7 @@ def dispatch(parm={}):
             httpResponse['status'] = 'error: non-unique color(s) specified'
         else:
             httpResponse['status'] = 'created'
-            httpResponse['cube'] = createCube(parm)
+            httpResponse['cube'] = createCube(selectedColors)
     return httpResponse
 
 #---------- inward facing methods ----------
@@ -24,9 +24,6 @@ def dispatch(parm={}):
 def createCube(parm):
     cube = []
     for face in FACE_ORDER_LIST:
-        if face in parm:
-            cube += [parm[face]]*9
-        else:
-            cube += [DEFAULT_FACE_COLORS[face]]*9
+        cube += [parm[face]]*9
     
     return cube

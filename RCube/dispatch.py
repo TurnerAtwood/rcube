@@ -7,9 +7,12 @@ def dispatch(parm={}):
         httpResponse['status'] = 'error: missing op'
     elif(parm['op'] == 'create'):
         parm.pop('op')
-        uniqueColors = set(parm.values())
+        selectedColors = DEFAULT_FACE_COLORS.copy()
+        for specifiedColor in parm:
+            selectedColors[specifiedColor] = parm[specifiedColor]
+        uniqueColors = set(selectedColors.values())
         
-        if(not len(uniqueColors) == len(parm)):
+        if(not len(uniqueColors) == len(selectedColors)):
             httpResponse['status'] = 'error: non-unique color(s) specified'
         else:
             httpResponse['status'] = 'created'

@@ -74,7 +74,7 @@ class CreateCubeTest(unittest.TestCase):
 # Happy Path
 
     def test100_010_ShouldCreateDefaultCube(self):
-        parm = {'op':'create'}
+        parm = {'f':'green', 'r':'yellow', 'b':'blue', 'l':'white', 't':'red', 'u':'orange'}
         expectedFaces = ['green', 'yellow', 'blue', 'white', 'red', 'orange']
         actualResult = RCube.createCube(parm)
         elementIndex = 0
@@ -84,7 +84,7 @@ class CreateCubeTest(unittest.TestCase):
                 elementIndex += 1
     
     def test100_020_ShouldCreatePurpleFrontCube(self):
-        parm = {'op':'create', 'f':'purple'}
+        parm = {'f':'purple', 'r':'yellow', 'b':'blue', 'l':'white', 't':'red', 'u':'orange'}
         expectedFaces = ['purple', 'yellow', 'blue', 'white', 'red', 'orange']
         actualResult = RCube.createCube(parm)
         elementIndex = 0
@@ -94,7 +94,7 @@ class CreateCubeTest(unittest.TestCase):
                 elementIndex += 1
     
     def test100_030_ShouldCreateBlackFrontCube(self):
-        parm = {'op':'create', 'f':'black'}
+        parm = {'f':'black', 'r':'yellow', 'b':'blue', 'l':'white', 't':'red', 'u':'orange'}
         expectedFaces = ['black', 'yellow', 'blue', 'white', 'red', 'orange']
         actualResult = RCube.createCube(parm)
         elementIndex = 0
@@ -104,7 +104,7 @@ class CreateCubeTest(unittest.TestCase):
                 elementIndex += 1
     
     def test100_040_ShouldCreateBlackRightCube(self):
-        parm = {'op':'create', 'r':'black'}
+        parm = {'f':'green', 'r':'black', 'b':'blue', 'l':'white', 't':'red', 'u':'orange'}
         expectedFaces = ['green', 'black', 'blue', 'white', 'red', 'orange']
         actualResult = RCube.createCube(parm)
         elementIndex = 0
@@ -114,7 +114,7 @@ class CreateCubeTest(unittest.TestCase):
                 elementIndex += 1
     
     def test100_050_ShouldCreatePurpleFrontBlackRightCube(self):
-        parm = {'op': 'create', 'f': 'purple', 'r': 'black'}
+        parm = {'f':'purple', 'r':'black', 'b':'blue', 'l':'white', 't':'red', 'u':'orange'}
         expectedFaces = ['purple', 'black', 'blue', 'white', 'red', 'orange']
         actualResult = RCube.createCube(parm)
         elementIndex = 0
@@ -124,7 +124,7 @@ class CreateCubeTest(unittest.TestCase):
                 elementIndex += 1
     
     def test100_060_ShouldCreatePurpleFrontBlackRightTealUnderCube(self):
-        parm = {'op':'create', 'f':'purple', 'r':'black', 'u':'teal'}
+        parm = {'f':'purple', 'r':'black', 'b':'blue', 'l':'white', 't':'red', 'u':'teal'}
         expectedFaces = ['purple', 'black', 'blue', 'white', 'red', 'teal']
         actualResult = RCube.createCube(parm)
         elementIndex = 0
@@ -134,7 +134,7 @@ class CreateCubeTest(unittest.TestCase):
                 elementIndex += 1
     
     def test100_070_ShouldCreateBlueFrontGreenRightPurpleBackCube(self):
-        parm = {'op':'create', 'f':'blue', 'r':'green', 'b':'purple'}
+        parm = {'f':'blue', 'r':'green', 'b':'purple', 'l':'white', 't':'red', 'u':'orange'}
         expectedFaces = ['blue', 'green', 'purple', 'white', 'red', 'orange']
         actualResult = RCube.createCube(parm)
         elementIndex = 0

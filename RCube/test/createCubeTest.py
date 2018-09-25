@@ -142,4 +142,4 @@ class CreateCubeTest(unittest.TestCase):
             for _ in range(9):
                 self.assertEqual(faceColor, actualResult[elementIndex])
                 elementIndex += 1
-        
+

@@ -173,7 +173,15 @@ class DispatchTest(unittest.TestCase):
                 self.assertEqual(faceColor, actualResult[actualElementIndex])
                 actualElementIndex += 1
         
-# Sad Path
+# Sad path
+
+    def test900_010_ShouldReturnErrorOnNonUniqueColors(self):
+        parm = {'op':'create', 'f':'purple', 'r':'purple'}
+        queryString="op=create&f=purple&r=purple"
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        self.assertIn('status', resultDict)
+        self.assertEquals('error:',resultDict['status'][0:6])
 
 
     

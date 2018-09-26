@@ -230,7 +230,18 @@ class DispatchTest(unittest.TestCase):
             for _ in range(9):
                 self.assertEqual(faceColor, actualResult[actualElementIndex])
                 actualElementIndex += 1
-        
+    
+    def test200_070_ShouldIgnoreInvalidFaceKeyAndCreatePurpleFrontCube(self):
+        queryString="op=create&f=purple&z=purple"
+        expectedFaces = ['purple', 'yellow','blue', 'white', 'red', 'orange']
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        actualResult = resultDict['cube']
+        actualElementIndex = 0
+        for faceColor in expectedFaces:
+            for _ in range(9):
+                self.assertEqual(faceColor, actualResult[actualElementIndex])
+                actualElementIndex += 1
 # Sad path
 
     def test900_010_ShouldReturnErrorOnTwoNonUniqueColors(self):
@@ -254,12 +265,6 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
         
-    def test900_040_ShouldReturnErrorOnInvalidFaceKey(self):
-        queryString="op=create&f=yellow&z=red"
-        resultString = self.httpGetAndResponse(queryString)
-        resultDict = self.string2dict(resultString) 
-        self.assertIn('status', resultDict)
-        self.assertEquals('error:',resultDict['status'][0:6])
 
 
     

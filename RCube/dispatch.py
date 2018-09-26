@@ -3,9 +3,9 @@ FACE_ORDER_LIST = ['f', 'r', 'b', 'l', 't', 'u']
 
 def dispatch(parm={}):
     httpResponse = {}
-    if(not('op' in parm)):
+    if not 'op' in parm:
         httpResponse['status'] = 'error: missing op'
-    elif(parm['op'] == 'create'):
+    elif  parm['op'] == 'create':
         parm.pop('op')
         selectedColors = DEFAULT_FACE_COLORS.copy()
         invalidKeySpecified = False
@@ -18,7 +18,7 @@ def dispatch(parm={}):
         
         if invalidKeySpecified:
             httpResponse['status'] = 'error: invalid face specified'
-        elif(not len(uniqueColors) == len(selectedColors)):
+        elif not len(uniqueColors) == len(selectedColors):
             httpResponse['status'] = 'error: non-unique color(s) specified'
         else:
             httpResponse['status'] = 'created'

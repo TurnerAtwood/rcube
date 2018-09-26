@@ -139,13 +139,35 @@ class DispatchTest(unittest.TestCase):
 #      input:   parm having at least one element with a key of "op"        
 #      output:  JSON string containing a key of "cube" 
 #
-#      input:   parm having at least one element with a key of "op"        
-#      output:  JSON string containing a the default value for the key 'cube' 
+#      input:   parm having at least one element with (key,value): (op,create)      
+#      output:  JSON string containing the default value for the key 'cube' 
+#
+#      input:   parm having at least one element with (key,value): (op,create), (f,purple), (r,black)     
+#      output:  JSON string containing a list representing a cube with a purple front and black right
+#
+#      input:   parm having at least one element with swapped default colors and (key,value): (op,create)    
+#      output:  JSON string containing a list representing a cube with swapped default colors for four faces
+#
+#      input:   parm having at least one element with similar strings 
+#                with different cases and (key,value): (op,create)
+#
+#      output:  JSON string containing a list representing a cube with swapped default colors for four faces
 #
 # Sad path analysis
-#      input:  
-#      output:  
 #
+#      input:   parm having at least one element with two faces specified as the same color
+#      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
+#
+#      input:   parm having at least one element with three faces specified as the same color
+#      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
+#
+#      input:   parm having at least one element with a specified color conflicting with a different face's default
+#      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
+#
+#      input:   parm having at least one element with an invalid key specified
+#      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
+#
+
 # Happy Path
 
     def test200_010ShouldCreateDefaultCubeStatus(self):
@@ -173,7 +195,7 @@ class DispatchTest(unittest.TestCase):
                 self.assertEqual(faceColor, actualResult[actualElementIndex])
                 actualElementIndex += 1
     
-    def test200_030_ShouldCreatePurpleFrontBlackRightCube(self):
+    def test200_040_ShouldCreatePurpleFrontBlackRightCube(self):
         queryString='op=create&f=purple&r=black'
         expectedFaces = ['purple', 'black','blue', 'white', 'red', 'orange']
         resultString = self.httpGetAndResponse(queryString)
@@ -185,9 +207,21 @@ class DispatchTest(unittest.TestCase):
                 self.assertEqual(faceColor, actualResult[actualElementIndex])
                 actualElementIndex += 1
     
-    def test200_030_ShouldCreateSwappedDefaultColorsCube(self):
+    def test200_050_ShouldCreateSwappedDefaultColorsCube(self):
         queryString='op=create&f=orange&r=red&t=yellow&u=green'
         expectedFaces = ['orange', 'red','blue', 'white', 'yellow', 'green']
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        actualResult = resultDict['cube']
+        actualElementIndex = 0
+        for faceColor in expectedFaces:
+            for _ in range(9):
+                self.assertEqual(faceColor, actualResult[actualElementIndex])
+                actualElementIndex += 1
+    
+    def test200_060_ShouldCreateCaseSensitiveColoredCube(self):
+        queryString='op=create&f=Yellow&b=White&l=white&t=WHITE&u=2179'
+        expectedFaces = ['Yellow', 'yellow','White', 'white', 'WHITE', '2179']
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         actualResult = resultDict['cube']

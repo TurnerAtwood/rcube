@@ -219,6 +219,13 @@ class DispatchTest(unittest.TestCase):
         resultDict = self.string2dict(resultString)
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
+        
+    def test900_040_ShouldReturnErrorOnInvalidFaceKey(self):
+        queryString="op=create&f=yellow&z=red"
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString) 
+        self.assertIn('status', resultDict)
+        self.assertEquals('error:',resultDict['status'][0:6])
 
 
     

@@ -8,11 +8,17 @@ def dispatch(parm={}):
     elif(parm['op'] == 'create'):
         parm.pop('op')
         selectedColors = DEFAULT_FACE_COLORS.copy()
-        for specifiedColor in parm:
-            selectedColors[specifiedColor] = parm[specifiedColor]
+        invalidKeySpecified = False
+        for specifiedFace in parm:
+            if specifiedFace not in DEFAULT_FACE_COLORS:
+                invalidKeySpecified = True
+                break
+            selectedColors[specifiedFace] = parm[specifiedFace]
         uniqueColors = set(selectedColors.values())
         
-        if(not len(uniqueColors) == len(selectedColors)):
+        if invalidKeySpecified:
+            httpResponse['status'] = 'error: invalid face specified'
+        elif(not len(uniqueColors) == len(selectedColors)):
             httpResponse['status'] = 'error: non-unique color(s) specified'
         else:
             httpResponse['status'] = 'created'

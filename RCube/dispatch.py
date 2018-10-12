@@ -29,7 +29,7 @@ def dispatch(parm={}):
             httpResponse = checkCube(selectedColors, cube)
         
         if not httpResponse:
-            httpResponse['status'] = 'full'
+            httpResponse = getCubeConfig(selectedColors, cube)
             
     return httpResponse
 
@@ -101,11 +101,13 @@ def getCubeConfig(selectedColors, cube):
         resultDict['status'] = 'full'
     elif isCubeSpots(faces):
         resultDict['status'] = 'spots'        
-
+    else:
+        resultDict['status']= 'unknown'
     return resultDict
 
 def isCubeFull(faces):
-    for face in faces:
+    for faceKey in faces:
+        face = faces[faceKey]
         foundColors = set()
         for color in face:
             foundColors.add(color)
@@ -114,11 +116,14 @@ def isCubeFull(faces):
     return True
 
 def isCubeSpots(faces):
-    for face in faces:
-        middleColor = face[4]
+    for faceKey in faces:
+        face = faces[faceKey][:]
+        face.pop(4)
+        firstColor = face[0]
         for color in face:
-            if not color == middleColor:
+            if not color == firstColor:
                 return False
+        
     return True
 
 def getFaces(selectedColors, cube):

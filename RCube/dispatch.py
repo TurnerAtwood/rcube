@@ -1,3 +1,4 @@
+from scipy.misc.common import face
 DEFAULT_FACE_COLORS = {'f':'green', 'r':'yellow', 'b':'blue', 'l':'white', 't':'red', 'u':'orange'}
 FACE_ORDER_LIST = ['f', 'r', 'b', 'l', 't', 'u']
 
@@ -91,3 +92,39 @@ def isCubeCenterValid(selectedColors, cube):
         centerIndex += 9
     
     return True
+
+def getCubeConfig(selectedColors, cube):
+    resultDict = {}
+    faces = getFaces(selectedColors, cube)
+    
+    if isCubeFull(faces):
+        resultDict['status'] = 'full'
+    elif isCubeSpots(faces):
+        resultDict['status'] = 'spots'        
+
+    return resultDict
+
+def isCubeFull(faces):
+    for face in faces:
+        foundColors = set()
+        for color in face:
+            foundColors.add(color)
+        if not len(foundColors) == 1:
+            return False
+    return True
+
+def isCubeSpots(faces):
+    for face in faces:
+        middleColor = face[4]
+        for color in face:
+            if not color == middleColor:
+                return False
+    return True
+
+def getFaces(selectedColors, cube):
+    faces = {}
+    startIndex = 0
+    for face in FACE_ORDER_LIST:
+        faces[face] = cube[startIndex:startIndex+9]
+        startIndex += 9
+    return faces

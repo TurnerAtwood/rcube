@@ -101,6 +101,8 @@ def getCubeConfig(selectedColors, cube):
         resultDict['status'] = 'full'
     elif isCubeSpots(faces):
         resultDict['status'] = 'spots'        
+    elif isCubeCrosses:
+        resultDict['status'] = 'crosses'
     else:
         resultDict['status']= 'unknown'
     return resultDict
@@ -123,7 +125,22 @@ def isCubeSpots(faces):
         for color in face:
             if not color == firstColor:
                 return False
-        
+    return True
+
+def isCubeCrosses(faces):
+    cornerList = [0,2,6,8]
+    crossList = [1,3,4,5,7]
+    for faceKey in faces:
+        face = faces[faceKey]
+        cornerColor = face[0]
+        for index in cornerList:
+            if not face[index] == cornerColor:
+                return False
+            
+        crossColor = face[1]
+        for index in crossList:
+            if not face[index] == crossColor:
+                return False
     return True
 
 def getFaces(selectedColors, cube):

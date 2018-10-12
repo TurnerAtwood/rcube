@@ -7,10 +7,7 @@ def dispatch(parm={}):
         httpResponse['status'] = 'error: missing op'
     elif  parm['op'] == 'create':
         parm.pop('op')
-        selectedColors = DEFAULT_FACE_COLORS.copy()
-        for specifiedFace in parm:
-            if specifiedFace in DEFAULT_FACE_COLORS:
-                selectedColors[specifiedFace] = parm[specifiedFace]
+        selectedColors = selectColors(parm)
         uniqueColors = set(selectedColors.values())
 
         if not len(uniqueColors) == len(selectedColors):
@@ -28,3 +25,10 @@ def createCube(parm):
         cube += [parm[face]]*9
     
     return cube
+
+def selectColors(parm):
+    selectedColors = DEFAULT_FACE_COLORS.copy()
+    for specifiedFace in parm:
+        if specifiedFace in DEFAULT_FACE_COLORS:
+            selectedColors[specifiedFace] = parm[specifiedFace]
+    return selectedColors

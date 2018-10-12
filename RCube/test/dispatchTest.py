@@ -313,3 +313,12 @@ class DispatchTest(unittest.TestCase):
         resultDict = self.string2dict(resultString)
         self.assertIn('status',  resultDict)
         self.assertEquals('full', resultDict['status'][0:7])
+
+# Sad Path
+
+    def test910_010_ShouldReturnErrorOnTwoNonUniqueColors(self):
+        queryString="op=check&f=purple&r=purple"
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        self.assertIn('status', resultDict)
+        self.assertEquals('error:',resultDict['status'][0:6])

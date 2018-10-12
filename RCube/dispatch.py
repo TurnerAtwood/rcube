@@ -54,4 +54,25 @@ def checkCube(selectedColors, cube):
         resultDict['status'] = 'error: cube not sized properly'
         return resultDict
     
+    if not isCubeColorCountValid(cube):
+        resultDict['status'] = 'error: illegal cube'
+        return resultDict
+    
     return resultDict 
+
+def isCubeColorCountValid(cube):
+    foundColors = {}
+    for pieceColor in cube:
+        if pieceColor in foundColors:
+            foundColors[pieceColor] += 1
+        else:
+            foundColors[pieceColor] = 1
+    
+    if not len(foundColors) == 6:
+        return False
+    
+    for color in foundColors:
+        if not foundColors[color] == 9:
+            return False
+    
+    return True 

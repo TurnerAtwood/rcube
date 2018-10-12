@@ -289,8 +289,8 @@ class DispatchTest(unittest.TestCase):
 # 
 # Happy path analysis
 #
-#      input:   parm having (key,value): (op,check) and (cube,<cube>)      
-#      output:  JSON string containing a key of "status" 
+#      input:   parm having (key,value): (op,check) and (cube,<cube>) where <cube> is default     
+#      output:  dictionary consisting of an element with a key of "status" and value of "full"
 #
 #
 # Sad path analysis
@@ -298,17 +298,22 @@ class DispatchTest(unittest.TestCase):
 #      input:   parm having at least one element with two faces specified as the same color
 #      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
 #
+#      input:   parm having (key,value): (op,check) and (cube,<cube>) where <cube> is not 54 elements     
+#      output:  dictionary consisting of an element with a key of "status" and value starting with "error:" 
+#
+#      input:   parm having (key,value): (op,check) and (cube,<cube>) where <cube> has the wrong number of colors    
+#      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
 #
         
 # Happy Path
 
     def test210_010ShouldReturnFullStatus(self):
-        queryString='op=check&cube=f,f,f,f,f,f,f,f,f,' + \
-                                  'r,r,r,r,r,r,r,r,r,' + \
-                                  'b,b,b,b,b,b,b,b,b,' + \
-                                  'l,l,l,l,l,l,l,l,l,' + \
-                                  't,t,t,t,t,t,t,t,t,' + \
-                                  'u,u,u,u,u,u,u,u,u'
+        queryString='op=check&cube=green,green,green,green,green,green,green,green,green,' + \
+                                  'yellow,yellow,yellow,yellow,yellow,yellow,yellow,yellow,yellow,' + \
+                                  'blue,blue,blue,blue,blue,blue,blue,blue,blue,' + \
+                                  'white,white,white,white,white,white,white,white,white,' + \
+                                  'red,red,red,red,red,red,red,red,red,' + \
+                                  'orange,orange,orange,orange,orange,orange,orange,orange,orange'
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         self.assertIn('status',  resultDict)
@@ -326,6 +331,18 @@ class DispatchTest(unittest.TestCase):
     def test920_010_ShouldReturnErrorOnBadCubeSize(self):
         queryString='op=check&cube=f,f,f,f,f,f,f,f,f,' + \
                                   'r,r,r,r,r,r,r,r,r,'
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        self.assertIn('status', resultDict)
+        self.assertEquals('error:',resultDict['status'][0:6])
+
+    def test930_010_ShouldReturnErrorOnBadCubeColors(self):
+        queryString='op=check&cube=f,f,f,f,f,f,f,f,f,' + \
+                                  'r,r,r,r,r,r,r,r,r,' + \
+                                  'r,r,r,r,r,r,r,r,r,' + \
+                                  'r,r,r,r,r,r,r,r,r,' + \
+                                  'r,r,r,r,r,r,r,r,r,' + \
+                                  'r,r,r,r,r,r,r,r,r'
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         self.assertIn('status', resultDict)

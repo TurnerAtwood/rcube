@@ -337,13 +337,28 @@ class DispatchTest(unittest.TestCase):
         self.assertEquals('error:',resultDict['status'][0:6])
 
     def test930_010_ShouldReturnErrorOnBadCubeColors(self):
-        queryString='op=check&cube=f,f,f,f,f,f,f,f,f,' + \
+        queryString='op=check&f=f&r=r&b=b&l=l&t=t&u=u&cube=' + \
+                                  'f,f,f,f,f,f,f,f,f,' + \
                                   'r,r,r,r,r,r,r,r,r,' + \
-                                  'r,r,r,r,r,r,r,r,r,' + \
-                                  'r,r,r,r,r,r,r,r,r,' + \
-                                  'r,r,r,r,r,r,r,r,r,' + \
-                                  'r,r,r,r,r,r,r,r,r'
+                                  'b,b,b,b,b,b,b,b,b,' + \
+                                  'l,l,l,l,l,l,l,l,l,' + \
+                                  't,t,t,t,t,t,t,t,t,' + \
+                                  'u,u,u,u,u,u,u,u,f'
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
+        
+    def test940_010_ShouldReturnErrorOnBadCubeCenters(self):
+        queryString='op=check&f=f&r=r&b=b&l=l&t=t&u=u&cube=' + \
+                                  'f,f,f,f,r,f,f,f,f,' + \
+                                  'r,r,r,r,f,r,r,r,r,' + \
+                                  'b,b,b,b,b,b,b,b,b,' + \
+                                  'l,l,l,l,l,l,l,l,l,' + \
+                                  't,t,t,t,t,t,t,t,t,' + \
+                                  'u,u,u,u,u,u,u,u,u'
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        self.assertIn('status', resultDict)
+        self.assertEquals('error:',resultDict['status'][0:6])
+        

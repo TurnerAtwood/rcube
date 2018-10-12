@@ -17,7 +17,15 @@ def dispatch(parm={}):
             httpResponse['cube'] = createCube(selectedColors)
             
     elif parm['op'] == 'check':
-        httpResponse['status'] = 'full'
+        parm.pop('op')
+        selectedColors = selectColors(parm)
+        uniqueColors = set(selectedColors.values())
+
+        if not len(uniqueColors) == len(selectedColors):
+            httpResponse['status'] = 'error: non-unique color(s) specified'
+        else:
+            httpResponse['status'] = 'full'
+            
     return httpResponse
 
 #---------- inward facing methods ----------

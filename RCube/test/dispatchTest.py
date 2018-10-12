@@ -331,6 +331,19 @@ class DispatchTest(unittest.TestCase):
         resultDict = self.string2dict(resultString)
         self.assertIn('status', resultDict)
         self.assertEquals('spots',resultDict['status'])
+        
+    def test210_030_ShouldReturnCrossesStatus(self):
+        queryString='op=check&f=w&r=g&b=y&l=b&t=r&u=o&cube=' + \
+                                  'r,w,r,w,w,w,r,w,r,' + \
+                                  'w,g,w,g,g,g,w,g,w,' + \
+                                  'o,y,o,y,y,y,o,y,o,' + \
+                                  'y,b,y,b,b,b,y,b,y,' + \
+                                  'g,r,g,r,r,r,g,r,g,' + \
+                                  'b,o,b,o,o,o,b,o,b'
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        self.assertIn('status', resultDict)
+        self.assertEquals('crosses',resultDict['status'])
 
 # Sad Path
 

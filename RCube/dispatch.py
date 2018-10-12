@@ -118,7 +118,7 @@ def isCubeFull(faces):
 def isCubeSpots(faces):
     for faceKey in faces:
         face = faces[faceKey][:]
-        face.pop(4)
+        middleColor = face.pop(4)
         firstColor = face[0]
         for color in face:
             if not color == firstColor:

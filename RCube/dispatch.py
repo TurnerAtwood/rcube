@@ -58,6 +58,10 @@ def checkCube(selectedColors, cube):
         resultDict['status'] = 'error: illegal cube'
         return resultDict
     
+    if not isCubeCenterValid(selectedColors, cube):
+        resultDict['status'] = 'error: illegal cube'
+        return resultDict
+    
     return resultDict 
 
 def isCubeColorCountValid(cube):
@@ -76,3 +80,14 @@ def isCubeColorCountValid(cube):
             return False
     
     return True 
+
+def isCubeCenterValid(selectedColors, cube):
+    centerIndex = 4
+    for face in FACE_ORDER_LIST:
+        expectedColor = selectedColors[face]
+        actualColor = cube[centerIndex]
+        if not expectedColor == actualColor:
+            return False
+        centerIndex += 9
+    
+    return True

@@ -15,6 +15,9 @@ def dispatch(parm={}):
         else:
             httpResponse['status'] = 'created'
             httpResponse['cube'] = createCube(selectedColors)
+            
+    elif parm['op'] == 'check':
+        httpResponse['status'] = 'full'
     return httpResponse
 
 #---------- inward facing methods ----------

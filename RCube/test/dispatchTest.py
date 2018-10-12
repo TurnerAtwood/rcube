@@ -302,7 +302,7 @@ class DispatchTest(unittest.TestCase):
         
 # Happy Path
 
-    def test300_010ShouldReturnFullStatus(self):
+    def test210_010ShouldReturnFullStatus(self):
         queryString='op=check&cube=f,f,f,f,f,f,f,f,f,' + \
                                   'r,r,r,r,r,r,r,r,r,' + \
                                   'b,b,b,b,b,b,b,b,b,' + \
@@ -312,4 +312,4 @@ class DispatchTest(unittest.TestCase):
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         self.assertIn('status',  resultDict)
-        self.assertEquals('created', resultDict['status'][0:7])
+        self.assertEquals('full', resultDict['status'][0:7])

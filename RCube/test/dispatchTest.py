@@ -266,5 +266,50 @@ class DispatchTest(unittest.TestCase):
         self.assertEquals('error:',resultDict['status'][0:6])
         
 
+# Acceptance Tests
+#
+# 200 dispatch -- op=check
+# Desired level of confidence is BVA
+# Input-Output Analysis
+#    inputs:   http:// ... myURL ... /rcube?op=create<options>
+#                where <options> can be zero or one of the following:
+#                  f=<string>    String of length .GT. 0   Optional.   Defaults to "green".  Unvalidated
+#                  r=<string>    String of length .GT. 0   Optional.   Defaults to "yellow". Unvalidated
+#                  b=<string>    String of length .GT. 0   Optional.   Defaults to "blue".   Unvalidated
+#                  l=<string>    String of length .GT. 0   Optional.   Defaults to "white".  Unvalidated
+#                  t=<string>    String of length .GT. 0   Optional.   Defaults to "red".    Unvalidated
+#                  u=<string>    String of length .GT. 0   Optional.   Defaults to "orange". Unvalidated
+#                  cube=<string> String represents list of length = 54    Required.          Unvalidated
+# 
+#    outputs:   
+#                Dictionary containing the status of the cube
+#                   The value of status can be one of: 'full', 'crosses', 'spots', 'unknown'.
+#                        -OR-
+#                   The value of status will be 'error: xxx', where xxx is an error message. 
+# 
+# Happy path analysis
+#
+#      input:   parm having at least one element with (key,value): (op,check)      
+#      output:  JSON string containing a key of "status" 
+#
+#
+# Sad path analysis
+#
+#      input:   parm having at least one element with two faces specified as the same color
+#      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
+#
+#
+        
+# Happy Path
 
-    
+    def test300_010ShouldReturnFullStatus(self):
+        queryString='op=check&cube=f,f,f,f,f,f,f,f,f,' + \
+                                  'r,r,r,r,r,r,r,r,r,' + \
+                                  'b,b,b,b,b,b,b,b,b,' + \
+                                  'l,l,l,l,l,l,l,l,l,' + \
+                                  't,t,t,t,t,t,t,t,t,' + \
+                                  'u,u,u,u,u,u,u,u,u'
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        self.assertIn('status',  resultDict)
+        self.assertEquals('created', resultDict['status'][0:7])

@@ -289,7 +289,7 @@ class DispatchTest(unittest.TestCase):
 # 
 # Happy path analysis
 #
-#      input:   parm having at least one element with (key,value): (op,check)      
+#      input:   parm having (key,value): (op,check) and (cube,<cube>)      
 #      output:  JSON string containing a key of "status" 
 #
 #
@@ -318,6 +318,14 @@ class DispatchTest(unittest.TestCase):
 
     def test910_010_ShouldReturnErrorOnTwoNonUniqueColors(self):
         queryString="op=check&f=purple&r=purple"
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        self.assertIn('status', resultDict)
+        self.assertEquals('error:',resultDict['status'][0:6])
+    
+    def test920_010_ShouldReturnErrorOnBadCubeSize(self):
+        queryString='op=check&cube=f,f,f,f,f,f,f,f,f,' + \
+                                  'r,r,r,r,r,r,r,r,r,'
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         self.assertIn('status', resultDict)

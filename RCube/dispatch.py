@@ -24,6 +24,9 @@ def dispatch(parm={}):
         if not len(uniqueColors) == len(selectedColors):
             httpResponse['status'] = 'error: non-unique color(s) specified'
         else:
+            httpResponse = checkCube(selectedColors, parm['cube'])
+        
+        if not httpResponse:
             httpResponse['status'] = 'full'
             
     return httpResponse
@@ -43,3 +46,11 @@ def selectColors(parm):
         if specifiedFace in DEFAULT_FACE_COLORS:
             selectedColors[specifiedFace] = parm[specifiedFace]
     return selectedColors
+
+def checkCube(selectedColors, cube):
+    resultDict = {}
+    if not len(cube) == 54:
+        resultDict['status'] = 'error: cube not sized properly'
+        return resultDict
+    
+    return resultDict 

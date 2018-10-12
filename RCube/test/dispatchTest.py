@@ -312,7 +312,7 @@ class DispatchTest(unittest.TestCase):
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         self.assertIn('status',  resultDict)
-        self.assertEquals('full', resultDict['status'][0:7])
+        self.assertEquals('full', resultDict['status'])
 
 # Sad Path
 

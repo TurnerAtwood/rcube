@@ -101,7 +101,7 @@ def getCubeConfig(selectedColors, cube):
         resultDict['status'] = 'full'
     elif isCubeSpots(faces):
         resultDict['status'] = 'spots'        
-    elif isCubeCrosses:
+    elif isCubeCrosses(faces):
         resultDict['status'] = 'crosses'
     else:
         resultDict['status']= 'unknown'

@@ -264,6 +264,13 @@ class DispatchTest(unittest.TestCase):
         resultDict = self.string2dict(resultString)
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
+
+    def test900_040_ShouldReturnErrorOnEmptySpecifiedFace(self):
+        queryString="op=create&f=&u=u"
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        self.assertIn('status', resultDict)
+        self.assertEquals('error:',resultDict['status'][0:6])
         
 
 # Acceptance Tests

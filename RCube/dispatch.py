@@ -67,6 +67,10 @@ def checkCube(selectedColors, cube):
         resultDict['status'] = 'error: illegal cube (bad corners)'
         return resultDict
     
+    if not isCubeEdgesValid(selectedColors, cube):
+        resultDict['status'] = 'error: illegal cube (bad edges)'
+        return resultDict
+    
     return resultDict 
 
 def isCubeColorCountValid(cube):
@@ -98,8 +102,6 @@ def isCubeCenterValid(selectedColors, cube):
     return True
 
 def isCubeCornerValid(selectedColors, cube):
-    faces = getFaces(selectedColors, cube)
-    
     cornerIndices = [(0,29,42),(2,9,44),(6,35,45),(8,15,47),(11,18,38),(20,27,36),(17,24,53),(26,33,51)]
     for indices in cornerIndices:
         colors = [cube[index] for index in indices]
@@ -109,7 +111,16 @@ def isCubeCornerValid(selectedColors, cube):
         if not valid:
             return False
     return True
-    
+
+def isCubeEdgesValid(selectedColors, cube):
+    edgeIndices = [(1,43),(3,32),(5,12),(7,46),(19,37),(21,14),(23,30),(25,52),(28,39),(10,41),(34,48),(16,50)]
+    for indices in edgeIndices:
+        colors = [cube[index] for index in indices]
+        valid = isColorsAdjacent(selectedColors, colors[0], colors[1])
+        if not valid:
+            return False
+    return True
+        
 def getCubeConfig(selectedColors, cube):
     resultDict = {}
     faces = getFaces(selectedColors, cube)

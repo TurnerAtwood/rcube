@@ -374,7 +374,7 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
         
-    def test900_012_ShouldReturnErrorOnEmptySpecifiedFace(self):
+    def test910_012_ShouldReturnErrorOnEmptySpecifiedFace(self):
         queryString='op=check&f=&r=r&b=b&l=l&t=t&u=u&cube=' + \
                                   ',,,,,,,,,' + \
                                   'r,r,r,r,r,r,r,r,r,' + \

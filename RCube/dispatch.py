@@ -23,7 +23,7 @@ def dispatch(parm={}):
 
         if not 'cube' in parm:
             httpResponse['status'] = 'error: cube must be specified'
-        else:
+        elif not httpResponse:
             cube = parm['cube'].split(",")
             httpResponse = checkCube(selectedColors, cube)
         

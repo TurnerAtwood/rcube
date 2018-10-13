@@ -374,6 +374,19 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
         
+    def test900_012_ShouldReturnErrorOnEmptySpecifiedFace(self):
+        queryString='op=check&f=&r=r&b=b&l=l&t=t&u=u&cube=' + \
+                                  ',,,,,,,,,' + \
+                                  'r,r,r,r,r,r,r,r,r,' + \
+                                  'b,b,b,b,b,b,b,b,b,' + \
+                                  'l,l,l,l,l,l,l,l,l,' + \
+                                  't,t,t,t,t,t,t,t,t,' + \
+                                  'u,u,u,u,u,u,u,u,u'
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        self.assertIn('status', resultDict)
+        self.assertEquals('error:',resultDict['status'][0:6])
+        
     def test910_015_ShouldReturnErrorOnMissingCube(self):
         queryString="op=check"
         resultString = self.httpGetAndResponse(queryString)

@@ -9,11 +9,9 @@ def dispatch(parm={}):
     elif  parm['op'] == 'create':
         parm.pop('op')
         selectedColors = selectColors(parm)
-        uniqueColors = set(selectedColors.values())
-
-        if not len(uniqueColors) == len(selectedColors):
-            httpResponse['status'] = 'error: non-unique color(s) specified'
-        else:
+        httpResponse = checkColors(selectedColors)
+        
+        if not httpResponse:
             httpResponse['status'] = 'created'
             httpResponse['cube'] = createCube(selectedColors)
             
@@ -49,8 +47,20 @@ def selectColors(parm):
     selectedColors = DEFAULT_FACE_COLORS.copy()
     for specifiedFace in parm:
         if specifiedFace in DEFAULT_FACE_COLORS:
+
             selectedColors[specifiedFace] = parm[specifiedFace]
     return selectedColors
+
+def checkColors(selectedColors):
+    resultDict = {}
+    uniqueColors = set(selectedColors.values())
+
+    if '' in uniqueColors:
+        resultDict['status'] = 'error: face color is missing'
+    elif not len(uniqueColors) == len(selectedColors):
+        resultDict['status'] = 'error: non-unique color(s) specified'
+
+    return resultDict
 
 def checkCube(selectedColors, cube):
     resultDict = {}

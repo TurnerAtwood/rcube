@@ -320,13 +320,13 @@ class DispatchTest(unittest.TestCase):
         self.assertEquals('full', resultDict['status'])
         
     def test210_020_ShouldReturnSpotsStatus(self):
-        queryString='op=check&f=u&r=t&b=l&l=b&t=r&u=f&cube=' + \
-                                  'f,f,f,f,u,f,f,f,f,' + \
-                                  'r,r,r,r,t,r,r,r,r,' + \
-                                  'b,b,b,b,l,b,b,b,b,' + \
-                                  'l,l,l,l,b,l,l,l,l,' + \
-                                  't,t,t,t,r,t,t,t,t,' + \
-                                  'u,u,u,u,f,u,u,u,u'
+        queryString='op=check&f=f&r=r&b=b&l=l&t=t&u=u&cube=' + \
+                                  't,t,t,t,f,t,t,t,t,' + \
+                                  'b,b,b,b,r,b,b,b,b,' + \
+                                  'u,u,u,u,b,u,u,u,u,' + \
+                                  'f,f,f,f,l,f,f,f,f,' + \
+                                  'l,l,l,l,t,l,l,l,l,' + \
+                                  'r,r,r,r,u,r,r,r,r'
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         self.assertIn('status', resultDict)

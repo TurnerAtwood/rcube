@@ -56,11 +56,15 @@ def checkCube(selectedColors, cube):
         return resultDict
     
     if not isCubeColorCountValid(cube):
-        resultDict['status'] = 'error: illegal cube'
+        resultDict['status'] = 'error: illegal cube (bad color count)'
         return resultDict
     
     if not isCubeCenterValid(selectedColors, cube):
-        resultDict['status'] = 'error: illegal cube'
+        resultDict['status'] = 'error: illegal cube (bad centers)'
+        return resultDict
+    
+    if not isCubeCornerValid(selectedColors, cube):
+        resultDict['status'] = 'error: illegal cube (bad corners)'
         return resultDict
     
     return resultDict 
@@ -93,6 +97,19 @@ def isCubeCenterValid(selectedColors, cube):
     
     return True
 
+def isCubeCornerValid(selectedColors, cube):
+    faces = getFaces(selectedColors, cube)
+    
+    cornerIndices = [(0,29,42),(2,9,44),(6,35,45),(8,15,47),(11,18,38),(20,27,36),(17,24,53),(26,33,51)]
+    for indices in cornerIndices:
+        colors = [cube[index] for index in indices]
+        valid = isColorsAdjacent(selectedColors, colors[0], colors[1])
+        valid = valid and isColorsAdjacent(selectedColors, colors[0], colors[2])
+        valid = valid and isColorsAdjacent(selectedColors, colors[1], colors[2])
+        if not valid:
+            return False
+    return True
+    
 def getCubeConfig(selectedColors, cube):
     resultDict = {}
     faces = getFaces(selectedColors, cube)
@@ -150,3 +167,22 @@ def getFaces(selectedColors, cube):
         faces[face] = cube[startIndex:startIndex+9]
         startIndex += 9
     return faces
+
+def isColorsAdjacent(selectedColors, color1, color2):
+    adjacentFaces = [('f','r'),('f','l'),('f','t'),('f','u'),
+                     ('b','r'),('b','l'),('b','t'),('b','u'),
+                     ('t','r'),('t','l'),('u','r'),('u','l')]
+    face1 = getFaceofColor(selectedColors, color1)
+    face2 = getFaceofColor(selectedColors, color2)
+    if (face1,face2) in adjacentFaces:
+        return True
+    if (face2,face1) in adjacentFaces:
+        return True
+    return False
+    
+def getFaceofColor(selectedColors, color):
+    for face in selectedColors:
+        if selectedColors[face] == color:
+            return face
+    return ""
+    

@@ -24,6 +24,8 @@ def dispatch(parm={}):
 
         if not len(uniqueColors) == len(selectedColors):
             httpResponse['status'] = 'error: non-unique color(s) specified'
+        elif not 'cube' in parm:
+            httpResponse['status'] = 'error: cube must be specified'
         else:
             cube = parm['cube'].split(",")
             httpResponse = checkCube(selectedColors, cube)

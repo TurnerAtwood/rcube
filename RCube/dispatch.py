@@ -117,11 +117,17 @@ def isCubeCornerValid(selectedColors, cube):
 
 def isCubeEdgesValid(selectedColors, cube):
     edgeIndices = [(1,43),(3,32),(5,12),(7,46),(19,37),(21,14),(23,30),(25,52),(28,39),(10,41),(34,48),(16,50)]
+    foundEdges = set()
     for indices in edgeIndices:
         colors = [cube[index] for index in indices]
+        foundEdges.add(tuple(sorted(colors)))
         valid = isColorsAdjacent(selectedColors, colors[0], colors[1])
         if not valid:
             return False
+    
+    if not len(foundEdges) == 12:
+        return False
+    
     return True
         
 def getCubeConfig(selectedColors, cube):

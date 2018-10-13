@@ -353,6 +353,13 @@ class DispatchTest(unittest.TestCase):
         resultDict = self.string2dict(resultString)
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
+        
+    def test910_015_ShouldReturnErrorOnMissingCube(self):
+        queryString="op=check"
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        self.assertIn('status', resultDict)
+        self.assertEquals('error:',resultDict['status'][0:6])
     
     def test910_020_ShouldReturnErrorOnBadCubeSize(self):
         queryString='op=check&cube=f,f,f,f,f,f,f,f,f,' + \
@@ -414,7 +421,7 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
 
-    def test910_060_ShouldReturnErrorOnBadCubeEdges(self):
+    def test910_070_ShouldReturnErrorOnBadCubeEdges(self):
         queryString='op=check&f=f&r=r&b=b&l=l&t=t&u=u&cube=' + \
                                   'f,f,f,f,f,f,f,f,f,' + \
                                   'r,r,r,r,r,r,r,r,r,' + \

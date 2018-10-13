@@ -28,6 +28,7 @@ def dispatch(parm={}):
             cube = parm['cube'].split(",")
             httpResponse = checkCube(selectedColors, cube)
         
+        # httpResponse will be empty if no errors are found with the cube
         if not httpResponse:
             httpResponse = getCubeConfig(selectedColors, cube)
             

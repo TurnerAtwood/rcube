@@ -345,6 +345,19 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('status', resultDict)
         self.assertEquals('crosses',resultDict['status'])
 
+    def test210_040_ShouldReturnUnknownStatus(self):
+        queryString='op=check&f=f&r=r&b=b&l=l&t=t&u=u&cube=' + \
+                                  'f,t,f,f,f,f,f,f,f,' + \
+                                  'r,r,r,r,r,r,r,r,r,' + \
+                                  'b,b,b,b,b,b,b,b,b,' + \
+                                  'l,l,l,l,l,l,l,l,l,' + \
+                                  't,t,t,t,t,t,t,f,t,' + \
+                                  'u,u,u,u,u,u,u,u,u'
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        self.assertIn('status', resultDict)
+        self.assertEquals('unknown',resultDict['status'])
+        
 # Sad Path
 
     def test910_010_ShouldReturnErrorOnTwoNonUniqueColors(self):

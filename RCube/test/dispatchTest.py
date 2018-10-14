@@ -244,28 +244,28 @@ class DispatchTest(unittest.TestCase):
                 actualElementIndex += 1
 # Sad path
 
-    def test900_010_ShouldReturnErrorOnTwoNonUniqueColors(self):
+    def test200_910_ShouldReturnErrorOnTwoNonUniqueColors(self):
         queryString="op=create&f=purple&r=purple"
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
         
-    def test900_020_ShouldReturnErrorOnThreeNonUniqueColors(self):
+    def test200_920_ShouldReturnErrorOnThreeNonUniqueColors(self):
         queryString="op=create&r=purple&b=purple&l=purple"
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
     
-    def test900_030_ShouldReturnErrorOnNonUniqueDefaultAndSpecifiedColors(self):
+    def test200_930_ShouldReturnErrorOnNonUniqueDefaultAndSpecifiedColors(self):
         queryString="op=create&f=yellow"
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
 
-    def test900_040_ShouldReturnErrorOnEmptySpecifiedFace(self):
+    def test200_940_ShouldReturnErrorOnEmptySpecifiedFace(self):
         queryString="op=create&f=&u=u"
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
@@ -314,7 +314,7 @@ class DispatchTest(unittest.TestCase):
         
 # Happy Path
 
-    def test210_010ShouldReturnFullStatus(self):
+    def test300_010ShouldReturnFullStatus(self):
         queryString='op=check&cube=green,green,green,green,green,green,green,green,green,' + \
                                   'yellow,yellow,yellow,yellow,yellow,yellow,yellow,yellow,yellow,' + \
                                   'blue,blue,blue,blue,blue,blue,blue,blue,blue,' + \
@@ -326,7 +326,7 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('status',  resultDict)
         self.assertEquals('full', resultDict['status'])
         
-    def test210_020_ShouldReturnSpotsStatus(self):
+    def test300_020_ShouldReturnSpotsStatus(self):
         queryString='op=check&f=f&r=r&b=b&l=l&t=t&u=u&cube=' + \
                                   't,t,t,t,f,t,t,t,t,' + \
                                   'b,b,b,b,r,b,b,b,b,' + \
@@ -339,7 +339,7 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('status', resultDict)
         self.assertEquals('spots',resultDict['status'])
         
-    def test210_030_ShouldReturnCrossesStatus(self):
+    def test300_030_ShouldReturnCrossesStatus(self):
         queryString='op=check&f=w&r=g&b=y&l=b&t=r&u=o&cube=' + \
                                   'r,w,r,w,w,w,r,w,r,' + \
                                   'w,g,w,g,g,g,w,g,w,' + \
@@ -352,7 +352,7 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('status', resultDict)
         self.assertEquals('crosses',resultDict['status'])
 
-    def test210_040_ShouldReturnUnknownStatus(self):
+    def test300_040_ShouldReturnUnknownStatus(self):
         queryString='op=check&f=f&r=r&b=b&l=l&t=t&u=u&cube=' + \
                                   'f,t,f,f,f,f,f,f,f,' + \
                                   'r,r,r,r,r,r,r,r,r,' + \
@@ -367,14 +367,14 @@ class DispatchTest(unittest.TestCase):
         
 # Sad Path
 
-    def test910_010_ShouldReturnErrorOnTwoNonUniqueColors(self):
+    def test300_910_ShouldReturnErrorOnTwoNonUniqueColors(self):
         queryString="op=check&f=purple&r=purple"
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
         
-    def test910_012_ShouldReturnErrorOnEmptySpecifiedFace(self):
+    def test300_912_ShouldReturnErrorOnEmptySpecifiedFace(self):
         queryString='op=check&f=&r=r&b=b&l=l&t=t&u=u&cube=' + \
                                   ',,,,,,,,,' + \
                                   'r,r,r,r,r,r,r,r,r,' + \
@@ -387,14 +387,14 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
         
-    def test910_015_ShouldReturnErrorOnMissingCube(self):
+    def test300_915_ShouldReturnErrorOnMissingCube(self):
         queryString="op=check"
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
     
-    def test910_020_ShouldReturnErrorOnBadCubeSize(self):
+    def test300_920_ShouldReturnErrorOnBadCubeSize(self):
         queryString='op=check&cube=f,f,f,f,f,f,f,f,f,' + \
                                   'r,r,r,r,r,r,r,r,r,'
         resultString = self.httpGetAndResponse(queryString)
@@ -402,7 +402,7 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
 
-    def test910_030_ShouldReturnErrorOnBadCubeColors(self):
+    def test300_930_ShouldReturnErrorOnBadCubeColors(self):
         queryString='op=check&f=f&r=r&b=b&l=l&t=t&u=u&cube=' + \
                                   'f,f,f,f,f,f,f,f,f,' + \
                                   'r,r,r,r,r,r,r,r,r,' + \
@@ -415,7 +415,7 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
         
-    def test910_040_ShouldReturnErrorOnWrongCubeColorsSpecified(self):
+    def test300_940_ShouldReturnErrorOnWrongCubeColorsSpecified(self):
         queryString='op=check&cube=' + \
                                   'f,f,f,f,f,f,f,f,f,' + \
                                   'r,r,r,r,r,r,r,r,r,' + \
@@ -428,7 +428,7 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
         
-    def test910_050_ShouldReturnErrorOnBadCubeCenters(self):
+    def test300_950_ShouldReturnErrorOnBadCubeCenters(self):
         queryString='op=check&f=f&r=r&b=b&l=l&t=t&u=u&cube=' + \
                                   'f,f,f,f,r,f,f,f,f,' + \
                                   'r,r,r,r,f,r,r,r,r,' + \
@@ -441,7 +441,7 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
 
-    def test910_060_ShouldReturnErrorOnBadCubeCorners(self):
+    def test300_960_ShouldReturnErrorOnBadCubeCorners(self):
         queryString='op=check&f=f&r=r&b=b&l=l&t=t&u=u&cube=' + \
                                   'f,f,f,f,f,f,f,f,f,' + \
                                   'b,r,r,r,r,r,r,r,r,' + \
@@ -454,7 +454,7 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
 
-    def test910_070_ShouldReturnErrorOnBadCubeEdges(self):
+    def test300_970_ShouldReturnErrorOnBadCubeEdges(self):
         queryString='op=check&f=f&r=r&b=b&l=l&t=t&u=u&cube=' + \
                                   'f,f,f,f,f,f,f,f,f,' + \
                                   'r,r,r,r,r,r,r,r,r,' + \
@@ -467,7 +467,7 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
 
-    def test910_080_ShouldReturnErrorOnBadCubeCorners(self):
+    def test300_980_ShouldReturnErrorOnBadCubeCorners(self):
         queryString='op=check&f=f&r=r&b=b&l=l&t=t&u=u&cube=' + \
                                   'f,f,f,f,f,f,f,f,f,' + \
                                   'r,r,r,r,r,r,r,r,r,' + \
@@ -480,7 +480,7 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
         
-    def test910_090_ShouldReturnErrorOnDuplicateCubeEdges(self):
+    def test300_990_ShouldReturnErrorOnDuplicateCubeEdges(self):
         queryString='op=check&f=f&r=r&b=b&l=l&t=t&u=u&cube=' + \
                                   'f,f,f,f,f,f,f,f,f,' + \
                                   'r,r,r,r,r,r,r,r,r,' + \

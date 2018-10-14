@@ -174,6 +174,9 @@ class DispatchTest(unittest.TestCase):
 #      input:   parm having at least one element with an invalid key specified
 #      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
 #
+#      input:   parm specifies an empty face
+#      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
+#
 
 # Happy Path
 
@@ -282,10 +285,10 @@ class DispatchTest(unittest.TestCase):
 
 # Acceptance Tests
 #
-# 200 dispatch -- op=check
+# 300 dispatch -- op=check
 # Desired level of confidence is BVA
 # Input-Output Analysis
-#    inputs:   http:// ... myURL ... /rcube?op=create<options>
+#    inputs:   http:// ... myURL ... /rcube?op=check<options>
 #                where <options> can be zero or one of the following:
 #                  f=<string>    String of length .GT. 0   Optional.   Defaults to "green".  Unvalidated
 #                  r=<string>    String of length .GT. 0   Optional.   Defaults to "yellow". Unvalidated
@@ -306,18 +309,49 @@ class DispatchTest(unittest.TestCase):
 #      input:   parm having (key,value): (op,check) and (cube,<cube>) where <cube> is default     
 #      output:  dictionary consisting of an element with a key of "status" and value of "full"
 #
+#      input:    parm holds a valid cube with the spot configuration
+#      output:   {'status': 'spots'}
+#
+#      input:    parm holds a valid cube with the crosses configuration
+#      output:   {'status': 'crosses'}
+#     
+#      input:    parm holds a valid cube with the unknown configuration
+#      output:   {'status': 'unknown'}
 #
 # Sad path analysis
 #
 #      input:   parm having at least one element with two faces specified as the same color
 #      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
 #
-#      input:   parm having (key,value): (op,check) and (cube,<cube>) where <cube> is not 54 elements     
-#      output:  dictionary consisting of an element with a key of "status" and value starting with "error:" 
+#      input:    parm contains a face with no specified value
+#      output:   {'status': 'error: xxx'}
 #
-#      input:   parm having (key,value): (op,check) and (cube,<cube>) where <cube> has the wrong number of colors    
-#      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
+#      input:    parm does not specify a cube
+#      output:   {'status': 'error: xxx'}
+#     
+#      input:    parm specifies a cube with length not equal to 54
+#      output:   {'status': 'error: xxx'}
 #
+#      input:   parm specifies a cube with invalid color count  
+#      output:   {'status': 'error: xxx'}
+#
+#      input:   parm specifies a valid cube that does not match the specified colors 
+#      output:   {'status': 'error: xxx'}
+#
+#      input:   parm specifies a cube with invalid centers
+#      output:   {'status': 'error: xxx'}
+#
+#      input:   parm specifies a cubee with impossible edges
+#      output:   {'status': 'error: xxx'}
+#
+#      input:   parm specifies a cubee with impossible corners
+#      output:   {'status': 'error: xxx'}
+#
+#      input:   parm specifies a cubee with duplicate edges
+#      output:   {'status': 'error: xxx'}
+#
+#      input:   parm specifies a cubee with duplicate corners
+#      output:   {'status': 'error: xxx'}
         
 # Happy Path
 

@@ -34,7 +34,10 @@ def dispatch(parm={}):
         # httpResponse will be empty if no errors are found with the cube
         if not httpResponse:
             httpResponse = getCubeConfig(selectedColors, cube)
-            
+    
+    else:
+        httpResponse['status'] = 'error: bad op specified' 
+        
     return httpResponse
 
 #---------- inward facing methods ----------

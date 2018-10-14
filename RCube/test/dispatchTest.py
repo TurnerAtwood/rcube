@@ -97,6 +97,13 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
 
+    def test100_920_ShouldReturnErrorOnBadOp(self):
+        queryString="op=NOTANOP"
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        self.assertIn('status', resultDict)
+        self.assertEquals('error:',resultDict['status'][0:6])
+
 # Acceptance Tests
 #
 # 200 dispatch -- op=create
@@ -467,7 +474,7 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
 
-    def test300_980_ShouldReturnErrorOnBadCubeCorners(self):
+    def test300_980_ShouldReturnErrorOnDuplicateCubeCorners(self):
         queryString='op=check&f=f&r=r&b=b&l=l&t=t&u=u&cube=' + \
                                   'f,f,f,f,f,f,f,f,f,' + \
                                   'r,r,r,r,r,r,r,r,r,' + \

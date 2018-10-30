@@ -635,25 +635,25 @@ class DispatchTest(unittest.TestCase):
        
 # Happy Path
 
-#     def test400_010_ShouldReturnRotatedFrontClockwise(self):
-#         queryString='op=rotate&face=f&cube=' + \
-#                                   'f,f,f,f,f,f,f,f,f,' + \
-#                                   'r,r,r,r,r,r,r,r,r,' + \
-#                                   'b,b,b,b,b,b,b,b,b,' + \
-#                                   'l,l,l,l,l,l,l,l,l,' + \
-#                                   't,t,t,t,t,t,t,t,t,' + \
-#                                   'u,u,u,u,u,u,u,u,u'
-#         expectedCube = ['f','f','f','f','f','f','f','f','f',
-#                         't','r','r','t','r','r','t','r','r',
-#                         'b','b','b','b','b','b','b','b','b',
-#                         'l','l','u','l','l','u','l','l','u',
-#                         't','t','t','t','t','t','l','l','l',
-#                         'r','r','r','u','u','u','u','u','u',]
-#         resultString = self.httpGetAndResponse(queryString)
-#         resultDict = self.string2dict(resultString)
-#         self.assertIn('status',  resultDict)
-#         self.assertEquals('rotated', resultDict['status'])
-#         self.assertIn('cube',  resultDict)
-#         self.assertEquals(expectedCube, resultDict['cube'])
+    def test400_010_ShouldReturnRotatedFrontClockwise(self):
+        queryString='op=rotate&face=f&cube=' + \
+                                  'f,f,f,f,f,f,f,f,f,' + \
+                                  'r,r,r,r,r,r,r,r,r,' + \
+                                  'b,b,b,b,b,b,b,b,b,' + \
+                                  'l,l,l,l,l,l,l,l,l,' + \
+                                  't,t,t,t,t,t,t,t,t,' + \
+                                  'u,u,u,u,u,u,u,u,u'
+        expectedCube = ['f','f','f','f','f','f','f','f','f',
+                        't','r','r','t','r','r','t','r','r',
+                        'b','b','b','b','b','b','b','b','b',
+                        'l','l','u','l','l','u','l','l','u',
+                        't','t','t','t','t','t','l','l','l',
+                        'r','r','r','u','u','u','u','u','u',]
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        self.assertIn('status',  resultDict)
+        self.assertEquals('rotated', resultDict['status'])
+        self.assertIn('cube',  resultDict)
+        self.assertEquals(expectedCube, resultDict['cube'])
 
 # Sad Path

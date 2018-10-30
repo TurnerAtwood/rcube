@@ -644,12 +644,35 @@ class DispatchTest(unittest.TestCase):
                                   'l,l,l,l,l,l,l,l,l,' + \
                                   't,t,t,t,t,t,t,t,t,' + \
                                   'u,u,u,u,u,u,u,u,u'
+                                  
         expectedCube = ['f','f','f','f','f','f','f','f','f',
                         't','r','r','t','r','r','t','r','r',
                         'b','b','b','b','b','b','b','b','b',
                         'l','l','u','l','l','u','l','l','u',
                         't','t','t','t','t','t','l','l','l',
                         'r','r','r','u','u','u','u','u','u',]
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        self.assertIn('status',  resultDict)
+        self.assertEquals('rotated', resultDict['status'])
+        self.assertIn('cube',  resultDict)
+        self.assertEquals(expectedCube, resultDict['cube'])
+    
+    def test400_011_ShouldReturnRotatedFrontAntiClockwise(self):
+        queryString='op=rotate&f=f&r=r&b=b&l=l&t=t&u=u&face=F&cube=' + \
+                                  'f,f,f,f,f,f,f,f,f,' + \
+                                  'r,r,r,r,r,r,r,r,r,' + \
+                                  'b,b,b,b,b,b,b,b,b,' + \
+                                  'l,l,l,l,l,l,l,l,l,' + \
+                                  't,t,t,t,t,t,t,t,t,' + \
+                                  'u,u,u,u,u,u,u,u,u'
+                                  
+        expectedCube = ['f','f','f','f','f','f','f','f','f',
+                        'u','r','r','u','r','r','u','r','r',
+                        'b','b','b','b','b','b','b','b','b',
+                        'l','l','t','l','l','t','l','l','t',
+                        't','t','t','t','t','t','r','r','r',
+                        'l','l','l','u','u','u','u','u','u',]
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         self.assertIn('status',  resultDict)

@@ -252,6 +252,7 @@ class DispatchTest(unittest.TestCase):
             for _ in range(9):
                 self.assertEqual(faceColor, actualResult[actualElementIndex])
                 actualElementIndex += 1
+
 # Sad path
 
     def test200_910_ShouldReturnErrorOnTwoNonUniqueColors(self):
@@ -533,3 +534,108 @@ class DispatchTest(unittest.TestCase):
         resultDict = self.string2dict(resultString)
         self.assertIn('status', resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])       
+
+# Acceptance Tests
+#
+# 400 dispatch -- op=rotate
+# Desired level of confidence is BVA
+# Input-Output Analysis
+#    inputs:   http:// ... myURL ... /rcube?op=rotate<options>
+#                where <options> can be zero or one of the following:
+#                  f=<string>    String of length .GT. 0   Optional.   Defaults to "green".  Unvalidated
+#                  r=<string>    String of length .GT. 0   Optional.   Defaults to "yellow". Unvalidated
+#                  b=<string>    String of length .GT. 0   Optional.   Defaults to "blue".   Unvalidated
+#                  l=<string>    String of length .GT. 0   Optional.   Defaults to "white".  Unvalidated
+#                  t=<string>    String of length .GT. 0   Optional.   Defaults to "red".    Unvalidated
+#                  u=<string>    String of length .GT. 0   Optional.   Defaults to "orange". Unvalidated
+#                  cube=<string> String represents list of length = 54    Required.          Unvalidated
+#                rotate=<string> String of length .GT. 0   Optional.      Required.          Unvalidated
+# 
+#    outputs:   
+#                Dictionary containing the rotated cube
+#                   The value of status can be 'rotated'
+#                        -OR-
+#                   The value of status will be 'error: xxx', where xxx is an error message. 
+# 
+# Happy path analysis
+#
+#      input:   parm having (key,value): (op,rotate), 
+#                    (cube,<cube>) where <cube> is valid, and(face,'f').
+#      output:  A dictionary having (status,'rotated') and 
+#                    (cube,<cube>) where <cube> has had its front face rotated clockwise
+#
+#      input:   parm having (key,value): (op,rotate), 
+#                    (cube,<cube>) where <cube> is valid, and(face,'F').
+#      output:  A dictionary having (status,'rotated') and 
+#                    (cube,<cube>) where <cube> has had its front face rotated anti-clockwise
+#
+#      input:   parm having (key,value): (op,rotate), 
+#                    (cube,<cube>) where <cube> is valid, and(face,'r').
+#      output:  A dictionary having (status,'rotated') and 
+#                    (cube,<cube>) where <cube> has had its right face rotated clockwise
+#
+#      input:   parm having (key,value): (op,rotate), 
+#                    (cube,<cube>) where <cube> is valid, and(face,'R').
+#      output:  A dictionary having (status,'rotated') and 
+#                    (cube,<cube>) where <cube> has had its right face rotated anti-clockwise
+#
+#      input:   parm having (key,value): (op,rotate), 
+#                    (cube,<cube>) where <cube> is valid, and(face,'b').
+#      output:  A dictionary having (status,'rotated') and 
+#                    (cube,<cube>) where <cube> has had its front face rotated clockwise
+#
+#      input:   parm having (key,value): (op,rotate), 
+#                    (cube,<cube>) where <cube> is valid, and(face,'B').
+#      output:  A dictionary having (status,'rotated') and 
+#                    (cube,<cube>) where <cube> has had its front face rotated anti-clockwise
+#
+#      input:   parm having (key,value): (op,rotate), 
+#                    (cube,<cube>) where <cube> is valid, and(face,'l').
+#      output:  A dictionary having (status,'rotated') and 
+#                    (cube,<cube>) where <cube> has had its front face rotated clockwise
+#
+#      input:   parm having (key,value): (op,rotate), 
+#                    (cube,<cube>) where <cube> is valid, and(face,'L').
+#      output:  A dictionary having (status,'rotated') and 
+#                    (cube,<cube>) where <cube> has had its front face rotated anti-clockwise
+#
+#      input:   parm having (key,value): (op,rotate), 
+#                    (cube,<cube>) where <cube> is valid, and(face,'t').
+#      output:  A dictionary having (status,'rotated') and 
+#                    (cube,<cube>) where <cube> has had its front face rotated clockwise
+#
+#      input:   parm having (key,value): (op,rotate), 
+#                    (cube,<cube>) where <cube> is valid, and(face,'T').
+#      output:  A dictionary having (status,'rotated') and 
+#                    (cube,<cube>) where <cube> has had its front face rotated anti-clockwise
+#
+#      input:   parm having (key,value): (op,rotate), 
+#                    (cube,<cube>) where <cube> is valid, and(face,'u').
+#      output:  A dictionary having (status,'rotated') and 
+#                    (cube,<cube>) where <cube> has had its front face rotated clockwise
+#
+#      input:   parm having (key,value): (op,rotate), 
+#                    (cube,<cube>) where <cube> is valid, and(face,'U').
+#      output:  A dictionary having (status,'rotated') and 
+#                    (cube,<cube>) where <cube> has had its front face rotated anti-clockwise
+#
+# Sad path analysis
+#
+#      input:   parm having (key,value): (op,rotate) and no cube specified
+#      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
+#
+#      input:   parm having (key,value): (op,rotate) and a bad cube specified
+#      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
+#
+#      input:   parm having (key,value): (op,rotate) and a bad face specified
+#      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
+#
+#      input:   parm having (key,value): (op,rotate) and no face specified
+#      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
+#
+
+        
+# Happy Path
+
+
+# Sad Path

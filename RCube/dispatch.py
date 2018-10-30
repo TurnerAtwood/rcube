@@ -1,3 +1,4 @@
+from copy import deepcopy
 from scipy.misc.common import face
 
 DEFAULT_FACE_COLORS = {'f':'green', 'r':'yellow', 'b':'blue', 'l':'white', 't':'red', 'u':'orange'}
@@ -282,7 +283,7 @@ def rotateCube(cube, rotation):
             edgeOrder[(direction+2)%4] = edgeKey
     
     # Perform rotations
-    newFaces = faces.copy()
+    newFaces = deepcopy(faces)
     for i in range(4):
         rotatedFromFace = faces[edgeOrder[i]]
         rotatedToFace = newFaces[edgeOrder[(i+1)%4]]

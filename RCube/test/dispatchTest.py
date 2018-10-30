@@ -687,8 +687,8 @@ class DispatchTest(unittest.TestCase):
                                   'r,r,r,r,r,r,r,r,r,' + \
                                   'b,b,b,b,b,b,b,b,b,' + \
                                   'l,l,l,l,l,l,l,l,l,' + \
-                                  't,t,u,t,t,t,t,t,t,' + \
-                                  't,u,u,u,u,u,u,u,u'
+                                  't,t,t,t,t,t,t,t,t,' + \
+                                  'u,u,u,u,u,u,u,u,u'
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         

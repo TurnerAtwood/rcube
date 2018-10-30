@@ -6,6 +6,12 @@ FACE_ORDER_LIST = ['f', 'r', 'b', 'l', 't', 'u']
 CORNER_INDICES = [(0,29,42),(2,9,44),(6,35,45),(8,15,47),(11,18,38),(20,27,36),(17,24,53),(26,33,51)]
 EDGE_INDICES = [(1,43),(3,32),(5,12),(7,46),(19,37),(21,14),(23,30),(25,52),(28,39),(10,41),(34,48),(16,50)]
 
+# These store all the necessary information to perform rotations on edges
+DIRECTION_INDICES = {0:[0,1,2], 1:[2,5,8], 2:[6,7,8], 3:[0,3,6]}
+ADJACENT_FACES_DIRECTIONS = {('f','r'):1, ('f','u'):2, ('f','l'):3, ('f','t'):0, 
+                             ('b','r'):3, ('b','u'):2, ('b','l'):1, ('b','t'):0,
+                             ('r','t'):0, ('r','u'):2, ('l','t'):0, ('l','u'):2}
+
 
 def dispatch(parm={}):
     httpResponse = {}
@@ -260,20 +266,40 @@ def rotateCube(cube, rotation):
         newFace[newIndex] = oldFace[oldIndex]
     faces[faceKey] = newFace
     
-    # Rotate the (f,t) edge into the (f,r) edge
-    faces['r'][0]= faces['t'][6]
-    faces['r'][3]= faces['t'][7]
-    faces['r'][6]= faces['t'][8]
-
-    # Rotate the (f,u) edge into the (f,l) edge
-    faces['l'][2]= faces['u'][0]
-    faces['l'][5]= faces['u'][1]
-    faces['l'][8]= faces['u'][2]
+    # Get the required indices and rotational order of adjacent faces
+    edges= {}
+    edgeOrder = ['']*4
+    for potentialEdge in ADJACENT_FACES_DIRECTIONS:
+        if faceKey in potentialEdge:
+            direction = ADJACENT_FACES_DIRECTIONS[potentialEdge]
+            edgeKey = potentialEdge[0]
+            
+            if faceKey == potentialEdge[0]:
+                direction = (direction+2)%4
+                edgeKey = potentialEdge[1]
+                
+            edges[edgeKey] = DIRECTION_INDICES[direction]
+            edgeOrder[(direction+2)%4] = edgeKey
+    
+    # Perform rotations
+    newFaces = faces.copy()
+    for i in range(4):
+        rotatedFromFace = faces[edgeOrder[i]]
+        rotatedToFace = newFaces[edgeOrder[(i+1)%4]]
+        rotatedFromIndices = edges[edgeOrder[i]]
+        rotatedToIndices = edges[edgeOrder[(i+1)%4]]
+        
+        if not i%2 == 0:
+            rotatedToIndices = rotatedToIndices[::-1]
+        for i in range(3):
+            fromIndex = rotatedFromIndices[i]
+            toIndex = rotatedToIndices[i]
+            rotatedToFace[toIndex] = rotatedFromFace[fromIndex]
     
     # Reconstruct a cube from faces
     resultCube = []
     for face in FACE_ORDER_LIST:
-        resultCube += faces[face]
+        resultCube += newFaces[face]
     
     return resultCube
     

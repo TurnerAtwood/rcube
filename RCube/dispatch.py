@@ -4,14 +4,15 @@ from scipy.misc.common import face
 DEFAULT_FACE_COLORS = {'f':'green', 'r':'yellow', 'b':'blue', 'l':'white', 't':'red', 'u':'orange'}
 FACE_ORDER_LIST = ['f', 'r', 'b', 'l', 't', 'u']
 
-CORNER_INDICES = [(0,29,42),(2,9,44),(6,35,45),(8,15,47),(11,18,38),(20,27,36),(17,24,53),(26,33,51)]
+CORNER_INDICES = [(0,29,42),(2,44,9),(6,45,35),(8,15,47),(11,38,18),(20,36,27),(26,33,51),(17,24,53)]
 EDGE_INDICES = [(1,43),(3,32),(5,12),(7,46),(19,37),(21,14),(23,30),(25,52),(28,39),(10,41),(34,48),(16,50)]
 
 # These store all the necessary information to perform rotations on edges
 DIRECTION_INDICES = {0:[0,1,2], 1:[2,5,8], 2:[6,7,8], 3:[0,3,6]}
-ADJACENT_FACES_DIRECTIONS = {('f','r'):1, ('f','u'):2, ('f','l'):3, ('f','t'):0, 
-                             ('b','r'):3, ('b','u'):2, ('b','l'):1, ('b','t'):0,
-                             ('r','t'):0, ('r','u'):2, ('l','t'):0, ('l','u'):2}
+ADJACENT_FACES_DIRECTIONS = {('f','r'):(1,3), ('f','u'):(2,0), ('f','l'):(3,1,), ('f','t'):(0,2), 
+                             ('b','r'):(3,1), ('b','u'):(2,2), ('b','l'):(1,3), ('b','t'):(0,0),
+                             ('r','t'):(0,1), ('r','u'):(2,1), ('l','t'):(0,3), ('l','u'):(2,3)}
+FACE_ROTATE_REVERSAL = {'f':[0,1,0,1], 'b':[1,0,1,0]}
 
 
 def dispatch(parm={}):
@@ -271,32 +272,43 @@ def rotateCube(cube, rotation):
     edges= {}
     edgeOrder = ['']*4
     for potentialEdge in ADJACENT_FACES_DIRECTIONS:
-        if faceKey in potentialEdge:
-            direction = ADJACENT_FACES_DIRECTIONS[potentialEdge]
-            edgeKey = potentialEdge[0]
-            
-            if faceKey == potentialEdge[0]:
-                direction = (direction+2)%4
-                edgeKey = potentialEdge[1]
-                
-            edges[edgeKey] = DIRECTION_INDICES[direction]
-            edgeOrder[(direction+2)%4] = edgeKey
+        if not faceKey in potentialEdge:
+            continue
+        currentFaceIndex = potentialEdge.index(faceKey)
+        otherFaceIndex = (currentFaceIndex+1)%2
+        direction = ADJACENT_FACES_DIRECTIONS[potentialEdge][otherFaceIndex]
+        edgeKey = potentialEdge[otherFaceIndex]
+        
+        edges[edgeKey] = DIRECTION_INDICES[direction]
+        edgeOrder[ADJACENT_FACES_DIRECTIONS[potentialEdge][currentFaceIndex]] = edgeKey
     
     # Perform rotations
     newFaces = deepcopy(faces)
+    rotations = FACE_ROTATE_REVERSAL[faceKey]
     for i in range(4):
         rotatedFromFace = faces[edgeOrder[i]]
         rotatedToFace = newFaces[edgeOrder[(i+1)%4]]
         rotatedFromIndices = edges[edgeOrder[i]]
         rotatedToIndices = edges[edgeOrder[(i+1)%4]]
         
-        if not i%2 == 0:
+        if rotations[i]:
             rotatedToIndices = rotatedToIndices[::-1]
+        
+        print rotatedFromFace
+        print rotatedToFace
+        print rotatedFromIndices
+        print rotatedToIndices
+        
+        # FIGURE OUT WHICH EDGES TO REVERSE????
+        
         for i in range(3):
             fromIndex = rotatedFromIndices[i]
             toIndex = rotatedToIndices[i]
             rotatedToFace[toIndex] = rotatedFromFace[fromIndex]
-    
+    print ' '
+    for face in FACE_ORDER_LIST:
+        print newFaces[face]
+    print ' '
     # Reconstruct a cube from faces
     resultCube = []
     for face in FACE_ORDER_LIST:

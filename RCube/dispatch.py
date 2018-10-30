@@ -42,6 +42,7 @@ def dispatch(parm={}):
 
 #---------- inward facing methods ----------
 
+#---------- op=create ----------
 def createFullCube(selectedColors):
     cube = []
     for face in FACE_ORDER_LIST:
@@ -67,6 +68,8 @@ def checkColors(selectedColors):
         resultDict['status'] = 'error: non-unique color(s) specified'
 
     return resultDict
+
+#---------- op=check ----------
 
 def checkCube(selectedColors, cube):
     resultDict = {}
@@ -236,4 +239,23 @@ def getFaceofColor(selectedColors, color):
         if selectedColors[face] == color:
             return face
     return ""
+    
+#---------- op=rotate ----------
+
+def rotateCube(cube, rotation):
+    movePairs = {0:2, 1:5, 2:8, 3:1, 4:4, 5:7, 6:0, 7:3, 8:6}
+    faces = getFaces(cube)
+    faceKey = rotation.lower()
+    oldFace = faces[faceKey]
+    newFace= ['']*9
+    for oldIndex in movePairs:
+        newIndex = movePairs[oldIndex]
+        newFace[newIndex] = oldFace[oldIndex]
+    faces[faceKey] = newFace
+    
+    resultCube = []
+    for face in FACE_ORDER_LIST:
+        resultCube += faces[face]
+    
+    return resultCube
     

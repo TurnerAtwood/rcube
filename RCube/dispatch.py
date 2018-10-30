@@ -47,6 +47,9 @@ def dispatch(parm={}):
         parm['op'] = 'check'
         httpResponse = dispatch(parm)
         
+        if not 'face'in parm:
+            httpResponse['status'] = 'error: face must be specified'
+        
         if not httpResponse['status'][0:6] == 'error:':
             cube = parm['cube'].split(",")
             httpResponse['status'] = 'rotated'

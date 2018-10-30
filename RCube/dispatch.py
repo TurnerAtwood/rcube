@@ -248,7 +248,8 @@ def rotateCube(cube, rotation):
         for i in range(3):
             cube = rotateCube(cube, faceKey)
         return cube
-     
+    
+    # Rotate the colors on the indicated face
     movePairs = {0:2, 1:5, 2:8, 3:1, 4:4, 5:7, 6:0, 7:3, 8:6}
     faces = getFaces(cube)
     oldFace = faces[faceKey]
@@ -258,6 +259,12 @@ def rotateCube(cube, rotation):
         newFace[newIndex] = oldFace[oldIndex]
     faces[faceKey] = newFace
     
+    # Rotate the (f,t) edge into the (f,r) edge
+    faces['r'][0]= faces['t'][6]
+    faces['r'][3]= faces['t'][7]
+    faces['r'][6]= faces['t'][8]
+    
+    # Reconstruct a cube from faces
     resultCube = []
     for face in FACE_ORDER_LIST:
         resultCube += faces[face]

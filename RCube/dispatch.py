@@ -243,9 +243,14 @@ def getFaceofColor(selectedColors, color):
 #---------- op=rotate ----------
 
 def rotateCube(cube, rotation):
+    faceKey = rotation.lower()
+    if not faceKey == rotation:
+        for i in range(3):
+            cube = rotateCube(cube, faceKey)
+        return cube
+     
     movePairs = {0:2, 1:5, 2:8, 3:1, 4:4, 5:7, 6:0, 7:3, 8:6}
     faces = getFaces(cube)
-    faceKey = rotation.lower()
     oldFace = faces[faceKey]
     newFace= ['']*9
     for oldIndex in movePairs:

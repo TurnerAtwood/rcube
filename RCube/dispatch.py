@@ -264,6 +264,11 @@ def rotateCube(cube, rotation):
     faces['r'][0]= faces['t'][6]
     faces['r'][3]= faces['t'][7]
     faces['r'][6]= faces['t'][8]
+
+    # Rotate the (f,u) edge into the (f,l) edge
+    faces['l'][2]= faces['u'][0]
+    faces['l'][5]= faces['u'][1]
+    faces['l'][8]= faces['u'][2]
     
     # Reconstruct a cube from faces
     resultCube = []

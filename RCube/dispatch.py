@@ -50,7 +50,7 @@ def dispatch(parm={}):
         
         if not 'face'in parm:
             httpResponse['status'] = 'error: face must be specified'
-        elif not parm['face'] in FACE_ORDER_LIST:
+        elif not parm['face'].lower() in FACE_ORDER_LIST:
             httpResponse['status'] = 'error: bad face specified'
         
         if not httpResponse['status'][0:6] == 'error:':

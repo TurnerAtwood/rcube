@@ -63,3 +63,22 @@ class RotateCubeTest(unittest.TestCase):
                 't','t','t','t','t','t','t','t','t',
                 'u','u','u','u','u','u','u','u','u',]
         self.assertEquals(expectedCube, resultCube)
+
+    def test100_020ShouldRotateFaceTopAntiClockwise(self):
+        
+        cube = ['0','1','2','3','f','5','6','7','8',
+                'r','r','r','r','r','r','r','r','r',
+                'b','b','b','b','b','b','b','b','b',
+                'l','l','l','l','l','l','l','l','l',
+                't','t','t','t','t','t','t','t','t',
+                'u','u','u','u','u','u','u','u','u',]
+        face = 'f'
+        resultCube = RCube.rotateCube(cube, face)
+        expectedCube = ['6','3','0','7','f','1','8','5','2',
+                'r','r','r','r','r','r','r','r','r',
+                'b','b','b','b','b','b','b','b','b',
+                'l','l','l','l','l','l','l','l','l',
+                't','t','t','t','t','t','t','t','t',
+                'u','u','u','u','u','u','u','u','u',]
+        self.assertEquals(expectedCube, resultCube)
+        

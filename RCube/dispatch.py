@@ -46,7 +46,7 @@ def dispatch(parm={}):
     elif parm['op'] == 'rotate':
         parm['op'] = 'check'
         httpResponse = dispatch(parm)
-            
+        
         if not httpResponse['status'][0:6] == 'error:':
             cube = parm['cube'].split(",")
             httpResponse['status'] = 'rotated'

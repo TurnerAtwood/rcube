@@ -627,12 +627,13 @@ class DispatchTest(unittest.TestCase):
 #      input:   parm having (key,value): (op,rotate) and a bad cube specified
 #      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
 #
+#      input:   parm having (key,value): (op,rotate) and no face specified
+#      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
+#       
 #      input:   parm having (key,value): (op,rotate) and a bad face specified
 #      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
 #
-#      input:   parm having (key,value): (op,rotate) and no face specified
-#      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
-       
+
 # Happy Path
 
     def test400_010_ShouldReturnRotatedFrontClockwise(self):
@@ -679,4 +680,20 @@ class DispatchTest(unittest.TestCase):
         
         self.assertIn('status',  resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
+
+    def test400_930_ShouldReturnErrorOnNoFaceSpecified(self):
+        queryString='op=rotate&f=f&r=r&b=b&l=l&t=t&u=u&cube=' + \
+                                  'f,f,f,f,f,f,f,f,f,' + \
+                                  'r,r,r,r,r,r,r,r,r,' + \
+                                  'b,b,b,b,b,b,b,b,b,' + \
+                                  'l,l,l,l,l,l,l,l,l,' + \
+                                  't,t,u,t,t,t,t,t,t,' + \
+                                  't,u,u,u,u,u,u,u,u'
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        
+        self.assertIn('status',  resultDict)
+        self.assertEquals('error:',resultDict['status'][0:6])
+
+
         

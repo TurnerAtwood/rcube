@@ -636,7 +636,7 @@ class DispatchTest(unittest.TestCase):
 # Happy Path
 
     def test400_010_ShouldReturnRotatedFrontClockwise(self):
-        queryString='op=rotate&face=f&cube=' + \
+        queryString='op=rotate&f=f&r=r&b=b&l=l&t=t&u=u&face=f&cube=' + \
                                   'f,f,f,f,f,f,f,f,f,' + \
                                   'r,r,r,r,r,r,r,r,r,' + \
                                   'b,b,b,b,b,b,b,b,b,' + \
@@ -657,3 +657,11 @@ class DispatchTest(unittest.TestCase):
         self.assertEquals(expectedCube, resultDict['cube'])
 
 # Sad Path
+
+    def test400_910_ShouldReturnErrorOnNoCubeSpecified(self):
+        queryString='op=rotate&f=f&r=r&b=b&l=l&t=t&u=u&face=f'
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        
+        self.assertIn('status',  resultDict)
+        self.assertEquals('error:',resultDict['status'][0:6])

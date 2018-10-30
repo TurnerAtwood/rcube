@@ -72,9 +72,9 @@ class RotateCubeTest(unittest.TestCase):
                 'l','l','l','l','l','l','l','l','l',
                 't','t','t','t','t','t','t','t','t',
                 'u','u','u','u','u','u','u','u','u',]
-        face = 'f'
+        face = 'F'
         resultCube = RCube.rotateCube(cube, face)
-        expectedCube = ['6','3','0','7','f','1','8','5','2',
+        expectedCube = ['2','5','8','1','f','7','0','3','6',
                 'r','r','r','r','r','r','r','r','r',
                 'b','b','b','b','b','b','b','b','b',
                 'l','l','l','l','l','l','l','l','l',

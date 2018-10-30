@@ -44,12 +44,10 @@ def dispatch(parm={}):
         if not httpResponse:
             httpResponse = getCubeConfig(selectedColors, cube)
     elif parm['op'] == 'rotate':
-        parm.pop('op')
-        
-        if not 'cube' in parm:
-            httpResponse['status'] = 'error: cube must be specified'
+        parm['op'] = 'check'
+        httpResponse = dispatch(parm)
             
-        if not httpResponse:
+        if not httpResponse['status'][0:6] == 'error:':
             cube = parm['cube'].split(",")
             httpResponse['status'] = 'rotated'
             httpResponse['cube'] = rotateCube(cube, parm['face'])

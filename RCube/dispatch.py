@@ -43,12 +43,15 @@ def dispatch(parm={}):
         # httpResponse will be empty if no errors are found with the cube
         if not httpResponse:
             httpResponse = getCubeConfig(selectedColors, cube)
+            
     elif parm['op'] == 'rotate':
         parm['op'] = 'check'
         httpResponse = dispatch(parm)
         
         if not 'face'in parm:
             httpResponse['status'] = 'error: face must be specified'
+        elif not parm['face'] in FACE_ORDER_LIST:
+            httpResponse['status'] = 'error: bad face specified'
         
         if not httpResponse['status'][0:6] == 'error:':
             cube = parm['cube'].split(",")

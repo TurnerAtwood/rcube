@@ -12,7 +12,7 @@ DIRECTION_INDICES = {0:[0,1,2], 1:[2,5,8], 2:[6,7,8], 3:[0,3,6]}
 ADJACENT_FACES_DIRECTIONS = {('f','r'):(1,3), ('f','u'):(2,0), ('f','l'):(3,1,), ('f','t'):(0,2), 
                              ('b','r'):(3,1), ('b','u'):(2,2), ('b','l'):(1,3), ('b','t'):(0,0),
                              ('r','t'):(0,1), ('r','u'):(2,1), ('l','t'):(0,3), ('l','u'):(2,3)}
-FACE_ROTATE_REVERSAL = {'f':[0,1,0,1], 'b':[1,0,1,0]}
+FACE_ROTATE_REVERSAL = {'f':[0,1,0,1], 'b':[1,0,1,0], 'r':[1,1,0,0]}
 
 
 def dispatch(parm={}):
@@ -267,7 +267,7 @@ def rotateCube(cube, rotation):
         newIndex = movePairs[oldIndex]
         newFace[newIndex] = oldFace[oldIndex]
     faces[faceKey] = newFace
-    
+    print 'changed ', faceKey
     # Get the required indices and rotational order of adjacent faces
     edges= {}
     edgeOrder = ['']*4
@@ -294,8 +294,7 @@ def rotateCube(cube, rotation):
         if rotations[i]:
             rotatedToIndices = rotatedToIndices[::-1]
         
-        # FIGURE OUT WHICH EDGES TO REVERSE????
-        
+        # Reverse indicated edges for the face bing rotated
         for i in range(3):
             fromIndex = rotatedFromIndices[i]
             toIndex = rotatedToIndices[i]
@@ -306,5 +305,9 @@ def rotateCube(cube, rotation):
     for face in FACE_ORDER_LIST:
         resultCube += newFaces[face]
     
+    print ''
+    for face in FACE_ORDER_LIST:
+        print newFaces[face]
+    print ''
     return resultCube
     

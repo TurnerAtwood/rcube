@@ -294,21 +294,13 @@ def rotateCube(cube, rotation):
         if rotations[i]:
             rotatedToIndices = rotatedToIndices[::-1]
         
-        print rotatedFromFace
-        print rotatedToFace
-        print rotatedFromIndices
-        print rotatedToIndices
-        
         # FIGURE OUT WHICH EDGES TO REVERSE????
         
         for i in range(3):
             fromIndex = rotatedFromIndices[i]
             toIndex = rotatedToIndices[i]
             rotatedToFace[toIndex] = rotatedFromFace[fromIndex]
-    print ' '
-    for face in FACE_ORDER_LIST:
-        print newFaces[face]
-    print ' '
+
     # Reconstruct a cube from faces
     resultCube = []
     for face in FACE_ORDER_LIST:

@@ -747,8 +747,49 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('cube',  resultDict)
         self.assertEquals(expectedCube, resultDict['cube'])
 
-#for i in range(6):
-#            print ",".join(["'"+i+"'" for i in resultDict['cube'][i*9:(i+1)*9]])
+    def test400_050_ShouldReturnRotatedTopAntiClockwise(self):
+        queryString='op=rotate&f=y&r=r&b=w&l=o&t=g&u=b&face=T&cube=' + \
+                                  'b,b,b,r,y,r,b,g,g,' + \
+                                  'o,y,b,b,r,g,w,g,r,' + \
+                                  'w,b,y,w,w,o,y,r,o,' + \
+                                  'g,o,o,w,o,g,w,y,r,' + \
+                                  'o,y,r,b,g,r,y,w,w,' + \
+                                  'y,y,r,o,b,o,g,w,g'
+                                  
+        expectedCube = ['o','o','g','r','y','r','b','g','g',
+                        'b','b','b','b','r','g','w','g','r',
+                        'b','y','o','w','w','o','y','r','o',
+                        'w','b','y','w','o','g','w','y','r',
+                        'r','r','w','y','g','w','o','b','y',
+                        'y','y','r','o','b','o','g','w','g']
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        self.assertIn('status',  resultDict)
+        self.assertEquals('rotated', resultDict['status'])
+        self.assertIn('cube',  resultDict)
+        self.assertEquals(expectedCube, resultDict['cube'])
+        
+    def test400_060_ShouldReturnRotatedUnderAntiClockwise(self):
+        queryString='op=rotate&f=y&r=r&b=w&l=o&t=g&u=b&face=U&cube=' + \
+                                  'b,b,b,r,y,r,b,g,g,' + \
+                                  'o,y,b,b,r,g,w,g,r,' + \
+                                  'w,b,y,w,w,o,y,r,o,' + \
+                                  'g,o,o,w,o,g,w,y,r,' + \
+                                  'o,y,r,b,g,r,y,w,w,' + \
+                                  'y,y,r,o,b,o,g,w,g'
+                                  
+        expectedCube = ['b','b','b','r','y','r','w','g','r',
+                        'o','y','b','b','r','g','y','r','o',
+                        'w','b','y','w','w','o','w','y','r',
+                        'g','o','o','w','o','g','b','g','g',
+                        'o','y','r','b','g','r','y','w','w',
+                        'r','o','g','y','b','w','y','o','g']
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        self.assertIn('status',  resultDict)
+        self.assertEquals('rotated', resultDict['status'])
+        self.assertIn('cube',  resultDict)
+        self.assertEquals(expectedCube, resultDict['cube'])
             
 # Sad Path
 

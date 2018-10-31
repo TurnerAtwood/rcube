@@ -734,11 +734,11 @@ class DispatchTest(unittest.TestCase):
                                   'o,y,r,b,g,r,y,w,w,' + \
                                   'y,y,r,o,b,o,g,w,g'
                                   
-        expectedCube = ['o','b','b','b','y','r','y','g','g'
-                        'o','y','b','b','r','g','w','g','r'
-                        'w','b','g','w','w','o','y','r','y'
-                        'w','w','g','y','o','o','r','g','o'
-                        'o','y','r','o','g','r','y','w','w'
+        expectedCube = ['o','b','b','b','y','r','y','g','g',
+                        'o','y','b','b','r','g','w','g','r',
+                        'w','b','g','w','w','o','y','r','y',
+                        'w','w','g','y','o','o','r','g','o',
+                        'o','y','r','o','g','r','y','w','w',
                         'b','y','r','r','b','o','b','w','g']
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)

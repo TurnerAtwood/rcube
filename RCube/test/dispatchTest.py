@@ -650,7 +650,7 @@ class DispatchTest(unittest.TestCase):
                         'b','b','b','b','b','b','b','b','b',
                         'l','l','u','l','l','u','l','l','u',
                         't','t','t','t','t','t','l','l','l',
-                        'r','r','r','u','u','u','u','u','u',]
+                        'r','r','r','u','u','u','u','u','u']
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         self.assertIn('status',  resultDict)
@@ -672,7 +672,7 @@ class DispatchTest(unittest.TestCase):
                         'b','b','b','b','b','b','b','b','b',
                         'l','l','t','l','l','t','l','l','t',
                         't','t','t','t','t','t','r','r','r',
-                        'l','l','l','u','u','u','u','u','u',]
+                        'l','l','l','u','u','u','u','u','u']
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         self.assertIn('status',  resultDict)

@@ -7,7 +7,6 @@ FACE_ORDER_LIST = ['f', 'r', 'b', 'l', 't', 'u']
 CORNER_INDICES = [(0,29,42),(2,9,44),(6,35,45),(8,15,47),(11,18,38),(20,27,36),(26,33,51),(17,24,53)]
 EDGE_INDICES = [(1,43),(3,32),(5,12),(7,46),(19,37),(21,14),(23,30),(25,52),(28,39),(10,41),(34,48),(16,50)]
 
-# These store all the necessary information to perform rotations on edges
 DIRECTION_INDICES = {0:[0,1,2], 1:[2,5,8], 2:[6,7,8], 3:[0,3,6]}
 ADJACENT_FACES_DIRECTIONS = {('f','r'):(1,3), ('f','u'):(2,0), ('f','l'):(3,1,), ('f','t'):(0,2), 
                              ('b','r'):(3,1), ('b','u'):(2,2), ('b','l'):(1,3), ('b','t'):(0,0),
@@ -268,21 +267,31 @@ def getFaceofColor(selectedColors, color):
 
 def rotateCube(cube, rotation):
     faceKey = rotation.lower()
+    
+    # AntiClockwise moves are equivalent to 3 clockwise moves
     if not faceKey == rotation:
-        for i in range(3):
+        for _ in range(3):
             cube = rotateCube(cube, faceKey)
         return cube
     
-    # Rotate the colors on the indicated face
-    movePairs = {0:2, 1:5, 2:8, 3:1, 4:4, 5:7, 6:0, 7:3, 8:6}
     faces = getFaces(cube)
+    faces = rotateFace(faces, faceKey)
+    newFaces = rotateFaceEdges(faces, faceKey)
+    resultCube = facesToCube(newFaces)
+    
+    return resultCube
+    
+def rotateFace(faces, faceKey):
+    movePairs = {0:2, 1:5, 2:8, 3:1, 4:4, 5:7, 6:0, 7:3, 8:6}
     oldFace = faces[faceKey]
     newFace= ['']*9
     for oldIndex in movePairs:
         newIndex = movePairs[oldIndex]
         newFace[newIndex] = oldFace[oldIndex]
     faces[faceKey] = newFace
-    # Get the required indices and rotational order of adjacent faces
+    return faces
+    
+def getFaceEdges(faceKey):
     edges= {}
     edgeOrder = ['']*4
     for potentialEdge in ADJACENT_FACES_DIRECTIONS:
@@ -296,8 +305,14 @@ def rotateCube(cube, rotation):
         edges[edgeKey] = DIRECTION_INDICES[direction]
         edgeOrder[ADJACENT_FACES_DIRECTIONS[potentialEdge][currentFaceIndex]] = edgeKey
     
-    # Perform rotations
+    return edges, edgeOrder    
+    
+def rotateFaceEdges(faces,faceKey):
+    edges, edgeOrder = getFaceEdges(faceKey)
+    
     newFaces = deepcopy(faces)
+    
+    # Depending on the face, sometimes colors in edges are switched backwards
     rotations = FACE_ROTATE_REVERSAL[faceKey]
     for i in range(4):
         rotatedFromFace = faces[edgeOrder[i]]
@@ -308,16 +323,15 @@ def rotateCube(cube, rotation):
         if rotations[i]:
             rotatedToIndices = rotatedToIndices[::-1]
         
-        # Reverse indicated edges for the face bing rotated
         for i in range(3):
             fromIndex = rotatedFromIndices[i]
             toIndex = rotatedToIndices[i]
             rotatedToFace[toIndex] = rotatedFromFace[fromIndex]
+    return newFaces
 
-    # Reconstruct a cube from faces
+def facesToCube(faces):
     resultCube = []
     for face in FACE_ORDER_LIST:
-        resultCube += newFaces[face]
-    
+        resultCube += faces[face]
     return resultCube
     

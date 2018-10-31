@@ -4,7 +4,7 @@ from scipy.misc.common import face
 DEFAULT_FACE_COLORS = {'f':'green', 'r':'yellow', 'b':'blue', 'l':'white', 't':'red', 'u':'orange'}
 FACE_ORDER_LIST = ['f', 'r', 'b', 'l', 't', 'u']
 
-CORNER_INDICES = [(0,29,42),(2,44,9),(6,45,35),(8,15,47),(11,38,18),(20,36,27),(26,33,51),(17,24,53)]
+CORNER_INDICES = [(0,29,42),(2,9,44),(6,35,45),(8,15,47),(11,18,38),(20,27,36),(26,33,51),(17,24,53)]
 EDGE_INDICES = [(1,43),(3,32),(5,12),(7,46),(19,37),(21,14),(23,30),(25,52),(28,39),(10,41),(34,48),(16,50)]
 
 # These store all the necessary information to perform rotations on edges
@@ -145,6 +145,7 @@ def isCubeCornerValid(selectedColors, cube):
     foundCorners = set()
     for indices in CORNER_INDICES:
         colors = [cube[index] for index in indices]
+        print colors
         foundCorners.add(tuple(sorted(colors)))
         
         valid = isColorsAdjacent(selectedColors, colors[0], colors[1])
@@ -317,7 +318,6 @@ def rotateCube(cube, rotation):
     resultCube = []
     for face in FACE_ORDER_LIST:
         resultCube += newFaces[face]
-    
     
     return resultCube
     

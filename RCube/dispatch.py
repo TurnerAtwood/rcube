@@ -1,5 +1,4 @@
 from copy import deepcopy
-from scipy.misc.common import face
 
 DEFAULT_FACE_COLORS = {'f':'green', 'r':'yellow', 'b':'blue', 'l':'white', 't':'red', 'u':'orange'}
 FACE_ORDER_LIST = ['f', 'r', 'b', 'l', 't', 'u']
@@ -262,7 +261,7 @@ def getFaceofColor(selectedColors, color):
         if selectedColors[face] == color:
             return face
     return ""
-    
+
 #---------- op=rotate ----------
 
 def rotateCube(cube, rotation):

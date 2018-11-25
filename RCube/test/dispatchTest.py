@@ -1,6 +1,7 @@
 import unittest
 import httplib
 import json
+from StdSuites.AppleScript_Suite import result
 
 class DispatchTest(unittest.TestCase):
         
@@ -755,13 +756,14 @@ class DispatchTest(unittest.TestCase):
                                   'g,o,o,w,o,g,w,y,r,' + \
                                   'o,y,r,b,g,r,y,w,w,' + \
                                   'y,y,r,o,b,o,g,w,g'
-                                  
-        expectedCube = ['o','o','g','r','y','r','b','g','g',
+        
+        expectedCube = ['g','o','o','r','y','r','b','g','g',
                         'b','b','b','b','r','g','w','g','r',
-                        'b','y','o','w','w','o','y','r','o',
+                        'o','y','b','w','w','o','y','r','o',
                         'w','b','y','w','o','g','w','y','r',
                         'r','r','w','y','g','w','o','b','y',
-                        'y','y','r','o','b','o','g','w','g']
+                        'y','y','r','o','b','o','g','w','g',]
+        
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
         self.assertIn('status',  resultDict)

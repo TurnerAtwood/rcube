@@ -173,7 +173,7 @@ class RotateCubeTest(unittest.TestCase):
         self.assertEquals(expectedCube, resultCube)
         
     def test100_662ShouldRotateTopFace(self):
-        
+        print "--------"
         cube = ['0','1','2','3','f','5','6','7','8',
                 '9','10','11','12','r','14','15','16','17',
                 '18','19','20','21','b','23','24','25','26',
@@ -189,7 +189,8 @@ class RotateCubeTest(unittest.TestCase):
                 '42','39','36','43','t','37','44','41','38',
                 '45','46','47','48','u','50','51','52','53',]
         self.assertEquals(expectedCube, resultCube)
-
+        print "--------"
+    
     def test100_663ShouldRotateLeftFace(self):
         
         cube = ['0','1','2','3','f','5','6','7','8',

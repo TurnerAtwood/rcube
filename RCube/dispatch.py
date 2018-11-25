@@ -143,7 +143,6 @@ def isCubeCornerValid(selectedColors, cube):
     foundCorners = set()
     for indices in CORNER_INDICES:
         colors = [cube[index] for index in indices]
-        print colors
         foundCorners.add(tuple(sorted(colors)))
         
         valid = isColorsAdjacent(selectedColors, colors[0], colors[1])
@@ -303,7 +302,6 @@ def getFaceEdges(faceKey):
         
         edges[edgeKey] = DIRECTION_INDICES[direction]
         edgeOrder[ADJACENT_FACES_DIRECTIONS[potentialEdge][currentFaceIndex]] = edgeKey
-    
     return edges, edgeOrder    
     
 def rotateFaceEdges(faces,faceKey):

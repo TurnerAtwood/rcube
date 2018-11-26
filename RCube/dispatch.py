@@ -1,4 +1,5 @@
 from copy import deepcopy
+from random import randint
 
 DEFAULT_FACE_COLORS = {'f':'green', 'r':'yellow', 'b':'blue', 'l':'white', 't':'red', 'u':'orange'}
 FACE_ORDER_LIST = ['f', 'r', 'b', 'l', 't', 'u']
@@ -12,6 +13,7 @@ ADJACENT_FACES_DIRECTIONS = {('f','r'):(1,3), ('f','u'):(2,0), ('f','l'):(3,1,),
                              ('r','t'):(0,1), ('r','u'):(2,1), ('l','t'):(0,3), ('l','u'):(2,3)}
 FACE_ROTATE_REVERSAL = {'f':[0,1,0,1], 'b':[1,0,1,0], 'r':[1,1,0,0], 't':[0,0,0,0], 'l':[0,0,1,1], 'u':[0,0,0,0]}
 
+POSSIBLE_MOVES = ['f', 'F', 'r', 'R', 'b', 'B', 'l', 'L', 't', 'T', 'u', 'U']
 
 def dispatch(parm={}):
     httpResponse = {}
@@ -63,6 +65,9 @@ def dispatch(parm={}):
             if parm['method'] not in ['random', 'transition']:
                 httpResponse['status'] = 'error: bad method specified'
         
+        else:
+            parm['method'] = 'random'
+            
         if 'n' in parm:
             try:
                 n = int(parm['n'])
@@ -71,9 +76,12 @@ def dispatch(parm={}):
             
             if '.' in parm['n'] or n < 0 or n > 99:
                 httpResponse['status'] = 'error: bad n specified'
+        
+        else:
+            parm['n'] = '0'
             
         if not httpResponse:        
-            httpResponse = scrambleCube(parm)
+            httpResponse = scrambleCube(parm['method'], parm['n'])
         
     else:
         httpResponse['status'] = 'error: bad op specified' 
@@ -353,8 +361,24 @@ def facesToCube(faces):
     
 #---------- op=scramble ----------
 
-def scrambleCube(parm):
-    result = {}
-    result['status'] = 'scrambled 100'
-    result['rotations'] = []
+def scrambleCube(method, n):
+    n = int(n)
+    
+    result = randomScramble(n)
+        
     return result
+
+def randomScramble(n):
+    result = {}
+    rotations = []
+    cube = dispatch({'op':'create'})
+    
+    for _ in range(n):
+        rotation = POSSIBLE_MOVES[randint(0,12)]
+        rotations.append(rotation)
+        cube = rotateCube(cube, rotation)
+    
+    result['status'] = 'scrambled 100'
+    result['rotations'] = rotations
+    return result
+    

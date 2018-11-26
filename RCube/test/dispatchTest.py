@@ -994,7 +994,7 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('status',  resultDict)
         resultStatus = resultDict['status'].split(' ')
         self.assertEqual('scrambled', resultStatus[0])
-        self.assertEqual(resultStatus[1], '9')
+        self.assertIn(resultStatus[1], ['9','10'])
         
         self.assertIn('rotations',  resultDict)
         resultRotations = resultDict['rotations']

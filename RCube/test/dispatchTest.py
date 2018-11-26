@@ -897,7 +897,10 @@ class DispatchTest(unittest.TestCase):
 #      input:   parm having (key,value): (scramble), and an invalid method specified
 #      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
 #
-#      input:   parm having (key,value): (scramble), and n specified to be a non-integer
+#      input:   parm having (key,value): (scramble), and n specified to not be a number
+#      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
+#
+#      input:   parm having (key,value): (scramble), and n specified to be a float
 #      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
 #
 #      input:   parm having (key,value): (scramble), and n specified as a negative integer
@@ -951,4 +954,20 @@ class DispatchTest(unittest.TestCase):
         resultDict = self.string2dict(resultString)
          
         self.assertIn('status',  resultDict)
-        self.assertEquals('error:',resultDict['status'][0:6])    
+        self.assertEquals('error:',resultDict['status'][0:6]) 
+        
+    def test500_930_ShouldReturnErrorOnInvalidN(self):
+        queryString='op=scramble&n=-1'
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+         
+        self.assertIn('status',  resultDict)
+        self.assertEquals('error:',resultDict['status'][0:6]) 
+
+    def test500_940_ShouldReturnErrorOnInvalidN(self):
+        queryString='op=scramble&n=100'
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+         
+        self.assertIn('status',  resultDict)
+        self.assertEquals('error:',resultDict['status'][0:6])

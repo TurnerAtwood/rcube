@@ -69,7 +69,7 @@ def dispatch(parm={}):
             except:
                 n = -1
             
-            if '.' in parm['n'] or n < 0 or n > 99:
+            if '.' in parm['n'] or n < 0:
                 httpResponse['status'] = 'error: bad n specified'
             
         if not httpResponse:        

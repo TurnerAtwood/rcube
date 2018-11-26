@@ -954,6 +954,40 @@ class DispatchTest(unittest.TestCase):
         for move in resultRotations:
             self.assertIn(move.lower(), ['f','r','b','l','t','u'])
 
+    def test500_040_ShouldReturnHighRandomnessThreeRandomMoves(self):
+        queryString='op=scramble&method=random&n=3'
+        
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        
+        self.assertIn('status',  resultDict)
+        resultStatus = resultDict['status'].split(' ')
+        self.assertEqual('scrambled', resultStatus[0])
+        self.assertIn(resultStatus[1], [str(i) for i in range(100)])
+        
+        self.assertIn('rotations',  resultDict)
+        resultRotations = resultDict['rotations']
+        self.assertEqual(len(resultRotations), 3)
+        for move in resultRotations:
+            self.assertIn(move.lower(), ['f','r','b','l','t','u'])
+
+#     def test500_050_ShouldReturnMidRandomnessThreeTransitionMoves(self):
+#         queryString='op=scramble&method=transition&n=3'
+#         
+#         resultString = self.httpGetAndResponse(queryString)
+#         resultDict = self.string2dict(resultString)
+#         
+#         self.assertIn('status',  resultDict)
+#         resultStatus = resultDict['status'].split(' ')
+#         self.assertEqual('scrambled', resultStatus[0])
+#         self.assertIn(resultStatus[1], [str(i) for i in range(101)])
+#         
+#         self.assertIn('rotations',  resultDict)
+#         resultRotations = resultDict['rotations']
+#         self.assertEqual(len(resultRotations), 3)
+#         for move in resultRotations:
+#             self.assertIn(move.lower(), ['f','r','b','l','t','u'])
+
 # Sad Path
  
     def test500_910_ShouldReturnErrorOnInvalidMethod(self):

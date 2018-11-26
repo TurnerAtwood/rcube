@@ -378,7 +378,22 @@ def randomScramble(n):
         rotations.append(rotation)
         cube = rotateCube(cube, rotation)
     
-    result['status'] = 'scrambled 100'
+    status = 'scrambled '
+    status += str(randomness(cube))
+    result['status'] = status
+    
     result['rotations'] = rotations
     return result
-    
+
+def randomness(cube):
+    total = 0
+    faces = getFaces(cube)
+    for faceKey in faces:
+        face = faces[faceKey]
+        for i in range(9):
+            for j in range(i+1,9):
+                if face[i] == face[j]:
+                    total += 1
+    result = total * 100.0/216.0
+    result = round(result)
+    return result

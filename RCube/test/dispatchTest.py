@@ -963,6 +963,7 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('status',  resultDict)
         resultStatus = resultDict['status'].split(' ')
         self.assertEqual('scrambled', resultStatus[0])
+        # An odd number of moves cannot result in a solved cube
         self.assertIn(resultStatus[1], [str(i) for i in range(100)])
         
         self.assertIn('rotations',  resultDict)

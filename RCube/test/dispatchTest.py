@@ -870,6 +870,11 @@ class DispatchTest(unittest.TestCase):
 #      output:  A dictionary having (status, 'scrambled 100')
 #                    and  (rotations, [])
 #
+#      input:   parm having (key,value): ('op':'scramble'), and
+#                     ('method', 'transition').
+#      output:  A dictionary having (status, 'scrambled 100')
+#                    and  (rotations, [])
+#
 #      input:   parm having (key,value): ('op':'scramble'), and 
 #                    (n,<n>) where <n> is valid.
 #      output:  A dictionary having (status, 'scrambled <randomness>' where 0 <= randomness <= 100
@@ -884,11 +889,6 @@ class DispatchTest(unittest.TestCase):
 #                    ('method', 'transition'), and (n,3).
 #      output:  A dictionary having (status, 'scrambled <randomness>' where 0 <= randomness <= 100
 #                    and  (rotations, <rotations>) where rotations is a list of n rotations
-#
-#      input:   parm having (key,value): ('op':'scramble'), and
-#                     ('method', 'transition').
-#      output:  A dictionary having (status, 'scrambled 100')
-#                    and  (rotations, [])
 #
 #      
 #
@@ -922,13 +922,25 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('rotations',  resultDict)
         self.assertEqual(expectedRotations, resultDict['rotations'])
 
+    def test500_020_ShouldReturn100RandomnessOneRotations(self):
+        queryString='op=scramble&method=transition'
+        expectedStatus = 'scrambled 100'
+        expectedRotations = []
+        
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        
+        self.assertIn('status',  resultDict)
+        self.assertEqual(expectedStatus, resultDict['status'])
+        self.assertIn('rotations',  resultDict)
+        self.assertEqual(expectedRotations, resultDict['rotations'])
+
 # Sad Path
-# 
-#     def test500_910_ShouldReturnErrorOnInvalidMethod(self):
-#         queryString='op=scramble&method=bad'
-#         resultString = self.httpGetAndResponse(queryString)
-#         resultDict = self.string2dict(resultString)
-#         
-#         self.assertIn('status',  resultDict)
-#         self.assertEquals('error:',resultDict['status'][0:6])    
-#     
+ 
+    def test500_910_ShouldReturnErrorOnInvalidMethod(self):
+        queryString='op=scramble&method=bad'
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+         
+        self.assertIn('status',  resultDict)
+        self.assertEquals('error:',resultDict['status'][0:6])    

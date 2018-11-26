@@ -1,7 +1,6 @@
 import unittest
 import httplib
 import json
-from StdSuites.AppleScript_Suite import result
 
 class DispatchTest(unittest.TestCase):
         
@@ -912,7 +911,7 @@ class DispatchTest(unittest.TestCase):
 
 # Happy Path
 
-    def test500_010_ShouldReturn100RandomnessNoRotations(self):
+    def test500_010_ShouldReturn100RandomnessNoRandomMoves(self):
         queryString='op=scramble'
         expectedStatus = 'scrambled 100'
         expectedRotations = []
@@ -925,7 +924,7 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('rotations',  resultDict)
         self.assertEqual(expectedRotations, resultDict['rotations'])
 
-    def test500_020_ShouldReturn100RandomnessOneRotations(self):
+    def test500_020_ShouldReturn100RandomnessNoTransitionMoves(self):
         queryString='op=scramble&method=transition'
         expectedStatus = 'scrambled 100'
         expectedRotations = []
@@ -937,6 +936,23 @@ class DispatchTest(unittest.TestCase):
         self.assertEqual(expectedStatus, resultDict['status'])
         self.assertIn('rotations',  resultDict)
         self.assertEqual(expectedRotations, resultDict['rotations'])
+
+    def test500_030_ShouldReturn100RandomnessOneRandomMove(self):
+        queryString='op=scramble&n=1'
+        
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        
+        self.assertIn('status',  resultDict)
+        resultStatus = resultDict['status'].split(' ')
+        self.assertEqual('scrambled', resultStatus[0])
+        self.assertIn(resultStatus[1], [str(i) for i in range(101)])
+        
+        self.assertIn('rotations',  resultDict)
+        resultRotations = resultDict['rotations']
+        self.assertEqual(len(resultRotations), 1)
+        for move in resultRotations:
+            self.assertIn(move.lower(), ['f','r','b','l','t','u'])
 
 # Sad Path
  

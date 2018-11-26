@@ -844,4 +844,88 @@ class DispatchTest(unittest.TestCase):
         
         self.assertIn('status',  resultDict)
         self.assertEquals('error:',resultDict['status'][0:6])
-        
+
+# Acceptance Tests
+#
+# 500 dispatch -- op=scramble
+# Desired level of confidence is BVA
+# Input-Output Analysis
+#    inputs:   http:// ... myURL ... /rcube?op=rotate<options>
+#                where <options> can be zero or one of the following:
+#                method=<string> "random" or "transition"  Optional.   Defaults to "random"  Unvalidated
+#                n=<int>, where 0 <= n <= 99               Optional.   Defaults to 0         Unvalidated
+# 
+#    outputs:   
+#                Dictionary containing keys 'status' and 'rotations'
+#                   The value of status will be 'error: xxx', where xxx is an error message. 
+#                        -OR-
+#                   The value of status can be 'scrambled <randomness>' where <randomness> is an integer
+#                        representing the degree to which the cube is scrambled.
+#                   Also, the value of 'rotations' will be a string representing the rotations performed.
+#                   
+# 
+# Happy path analysis
+#
+#      input:   parm having (key,value): ('op':'scramble').
+#      output:  A dictionary having (status, 'scrambled 100')
+#                    and  (rotations, [])
+#
+#      input:   parm having (key,value): ('op':'scramble'), and 
+#                    (n,<n>) where <n> is valid.
+#      output:  A dictionary having (status, 'scrambled <randomness>' where 0 <= randomness <= 100
+#                    and  (rotations, <rotations>) where rotations is a list of n rotations
+#
+#      input:   parm having (key,value): ('op':'scramble'),
+#                    ('method', 'random'), and (n,3).
+#      output:  A dictionary having (status, 'scrambled <randomness>' where 0 <= randomness <= 100
+#                    and  (rotations, <rotations>) where rotations is a list of n rotations
+#
+#      input:   parm having (key,value): ('op':'scramble'), 
+#                    ('method', 'transition'), and (n,3).
+#      output:  A dictionary having (status, 'scrambled <randomness>' where 0 <= randomness <= 100
+#                    and  (rotations, <rotations>) where rotations is a list of n rotations
+#
+#      input:   parm having (key,value): ('op':'scramble'), and
+#                     ('method', 'transition').
+#      output:  A dictionary having (status, 'scrambled 100')
+#                    and  (rotations, [])
+#
+#      
+#
+# Sad path analysis
+#
+#      input:   parm having (key,value): (scramble), and an invalid method specified
+#      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
+#
+#      input:   parm having (key,value): (scramble), and n specified to be a non-integer
+#      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
+#
+#      input:   parm having (key,value): (scramble), and n specified as a negative integer
+#      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
+#
+#      input:   parm having (key,value): (scramble), and n specified as an integer with n > 99
+#      output:  dictionary consisting of an element with a key of "status" and value starting with "error:"
+#
+
+# Happy Path
+
+    def test500_010_ShouldReturn100RandomnessNoRotations(self):
+        queryString='op=scramble'
+                                  
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+        self.assertIn('status',  resultDict)
+        # Complex status assertion
+        self.assertIn('rotations',  resultDict)
+        # list of n [f,F,r,R, ...].
+
+# Sad Path
+# 
+#     def test500_910_ShouldReturnErrorOnInvalidMethod(self):
+#         queryString='op=scramble&method=bad'
+#         resultString = self.httpGetAndResponse(queryString)
+#         resultDict = self.string2dict(resultString)
+#         
+#         self.assertIn('status',  resultDict)
+#         self.assertEquals('error:',resultDict['status'][0:6])    
+#     

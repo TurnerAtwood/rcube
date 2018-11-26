@@ -984,6 +984,23 @@ class DispatchTest(unittest.TestCase):
         self.assertEqual(len(resultRotations), 3)
         for move in resultRotations:
             self.assertIn(move.lower(), ['f','r','b','l','t','u'])
+            
+    def test500_050_ShouldReturnLowRandomnessThreeTransitionMoves(self):
+        queryString='op=scramble&method=transition&n=99'
+         
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+         
+        self.assertIn('status',  resultDict)
+        resultStatus = resultDict['status'].split(' ')
+        self.assertEqual('scrambled', resultStatus[0])
+        self.assertEqual(resultStatus[1], '9')
+        
+        self.assertIn('rotations',  resultDict)
+        resultRotations = resultDict['rotations']
+        self.assertEqual(len(resultRotations), 99)
+        for move in resultRotations:
+            self.assertIn(move.lower(), ['f','r','b','l','t','u'])
 
 # Sad Path
  

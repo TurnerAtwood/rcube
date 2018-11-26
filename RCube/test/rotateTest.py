@@ -226,4 +226,3 @@ class RotateCubeTest(unittest.TestCase):
                 '36','37','38','39','t','41','42','43','44',
                 '51','48','45','52','u','46','53','50','47',]
         self.assertEquals(expectedCube, resultCube)
-        

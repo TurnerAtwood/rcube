@@ -371,10 +371,10 @@ def scrambleCube(method, n):
 def randomScramble(n):
     result = {}
     rotations = []
-    cube = dispatch({'op':'create'})
+    cube = dispatch({'op':'create'})['cube']
     
     for _ in range(n):
-        rotation = POSSIBLE_MOVES[randint(0,12)]
+        rotation = POSSIBLE_MOVES[randint(0,11)]
         rotations.append(rotation)
         cube = rotateCube(cube, rotation)
     

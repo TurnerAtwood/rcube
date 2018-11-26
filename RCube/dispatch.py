@@ -395,5 +395,5 @@ def randomness(cube):
                 if face[i] == face[j]:
                     total += 1
     result = total * 100.0/216.0
-    result = round(result)
+    result = int(round(result))
     return result

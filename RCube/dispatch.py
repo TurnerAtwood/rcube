@@ -58,7 +58,13 @@ def dispatch(parm={}):
     
     elif parm['op'] == 'scramble':
         parm.pop('op')
-        httpResponse = scrambleCube(parm)
+        
+        if 'method' in parm:
+            if parm['method'] not in ['random', 'transition']:
+                httpResponse['status'] = 'error: bad method specified'
+        
+        if not httpResponse:        
+            httpResponse = scrambleCube(parm)
         
     else:
         httpResponse['status'] = 'error: bad op specified' 

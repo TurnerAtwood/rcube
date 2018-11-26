@@ -394,15 +394,19 @@ def transitionScramble(n):
     cube = dispatch({'op':'create'})['cube']
     
     for _ in range(n):
-        bestRotation = ''
-        lowestRandomness = 100
+        bestRotations = []
+        lowestRandomness = 101
         for potentialRotation in POSSIBLE_MOVES:
             potentialCube = rotateCube(cube, potentialRotation)
             potentialRandomness = randomness(potentialCube)
             if potentialRandomness < lowestRandomness:
                 lowestRandomness = potentialRandomness
-                bestRotation = potentialRotation
+                bestRotations = [potentialRotation]
+            elif potentialRandomness == lowestRandomness:
+                bestRotations.append(potentialRotation)
         
+        print bestRotations
+        bestRotation = bestRotations[randint(0,len(bestRotations)-1)]
         rotations.append(bestRotation)
         cube = rotateCube(cube, bestRotation)
     

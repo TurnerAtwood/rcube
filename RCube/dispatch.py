@@ -63,6 +63,15 @@ def dispatch(parm={}):
             if parm['method'] not in ['random', 'transition']:
                 httpResponse['status'] = 'error: bad method specified'
         
+        if 'n' in parm:
+            try:
+                n = int(parm['n'])
+            except:
+                n = -1
+            
+            if '.' in parm['n'] or n < 0 or n > 99:
+                httpResponse['status'] = 'error: bad n specified'
+            
         if not httpResponse:        
             httpResponse = scrambleCube(parm)
         

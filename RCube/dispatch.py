@@ -405,7 +405,6 @@ def transitionScramble(n):
             elif potentialRandomness == lowestRandomness:
                 bestRotations.append(potentialRotation)
         
-        print bestRotations
         bestRotation = bestRotations[randint(0,len(bestRotations)-1)]
         rotations.append(bestRotation)
         cube = rotateCube(cube, bestRotation)

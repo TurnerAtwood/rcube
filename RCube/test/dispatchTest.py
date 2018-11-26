@@ -985,7 +985,7 @@ class DispatchTest(unittest.TestCase):
         for move in resultRotations:
             self.assertIn(move.lower(), ['f','r','b','l','t','u'])
             
-    def test500_050_ShouldReturnLowRandomnessThreeTransitionMoves(self):
+    def test500_060_ShouldReturnLowRandomness99TransitionMoves(self):
         queryString='op=scramble&method=transition&n=99'
          
         resultString = self.httpGetAndResponse(queryString)
@@ -1030,6 +1030,14 @@ class DispatchTest(unittest.TestCase):
 
     def test500_940_ShouldReturnErrorOnInvalidN(self):
         queryString='op=scramble&n=100'
+        resultString = self.httpGetAndResponse(queryString)
+        resultDict = self.string2dict(resultString)
+         
+        self.assertIn('status',  resultDict)
+        self.assertEquals('error:',resultDict['status'][0:6])
+        
+    def test500_950_ShouldReturnErrorOnInvalidN(self):
+        queryString='op=scramble&n=10.1'
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
          

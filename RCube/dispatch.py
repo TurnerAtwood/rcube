@@ -55,6 +55,10 @@ def dispatch(parm={}):
             cube = parm['cube'].split(",")
             httpResponse['status'] = 'rotated'
             httpResponse['cube'] = rotateCube(cube, parm['face'])
+    
+    elif parm['op'] == 'scramble':
+        parm.pop('op')
+        httpResponse = scrambleCube(parm)
         
     else:
         httpResponse['status'] = 'error: bad op specified' 
@@ -332,3 +336,10 @@ def facesToCube(faces):
         resultCube += faces[face]
     return resultCube
     
+#---------- op=scramble ----------
+
+def scrambleCube(parm):
+    result = {}
+    result['status'] = 'scrambled 100'
+    result['rotations'] = []
+    return result

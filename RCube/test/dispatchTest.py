@@ -911,13 +911,16 @@ class DispatchTest(unittest.TestCase):
 
     def test500_010_ShouldReturn100RandomnessNoRotations(self):
         queryString='op=scramble'
-                                  
+        expectedStatus = 'scrambled 100'
+        expectedRotations = []
+        
         resultString = self.httpGetAndResponse(queryString)
         resultDict = self.string2dict(resultString)
+        
         self.assertIn('status',  resultDict)
-        # Complex status assertion
+        self.assertEqual(expectedStatus, resultDict['status'])
         self.assertIn('rotations',  resultDict)
-        # list of n [f,F,r,R, ...].
+        self.assertEqual(expectedRotations, resultDict['rotations'])
 
 # Sad Path
 # 

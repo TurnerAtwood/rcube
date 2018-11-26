@@ -364,7 +364,10 @@ def facesToCube(faces):
 def scrambleCube(method, n):
     n = int(n)
     
-    result = randomScramble(n)
+    if method == 'random':
+        result = randomScramble(n)
+    else:
+        result = transitionScramble(n)
         
     return result
 
@@ -377,6 +380,31 @@ def randomScramble(n):
         rotation = POSSIBLE_MOVES[randint(0,11)]
         rotations.append(rotation)
         cube = rotateCube(cube, rotation)
+    
+    status = 'scrambled '
+    status += str(randomness(cube))
+    result['status'] = status
+    
+    result['rotations'] = rotations
+    return result
+
+def transitionScramble(n):
+    result = {}
+    rotations = []
+    cube = dispatch({'op':'create'})['cube']
+    
+    for _ in range(n):
+        bestRotation = ''
+        lowestRandomness = 100
+        for potentialRotation in POSSIBLE_MOVES:
+            potentialCube = rotateCube(cube, potentialRotation)
+            potentialRandomness = randomness(potentialCube)
+            if potentialRandomness < lowestRandomness:
+                lowestRandomness = potentialRandomness
+                bestRotation = potentialRotation
+        
+        rotations.append(bestRotation)
+        cube = rotateCube(cube, bestRotation)
     
     status = 'scrambled '
     status += str(randomness(cube))

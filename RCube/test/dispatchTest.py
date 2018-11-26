@@ -874,11 +874,6 @@ class DispatchTest(unittest.TestCase):
 #      output:  A dictionary having (status, 'scrambled 100')
 #                    and  (rotations, [])
 #
-#      input:   parm having (key,value): ('op':'scramble'), and 
-#                    (n,<n>) where <n> is valid.
-#      output:  A dictionary having (status, 'scrambled <randomness>' where 0 <= randomness <= 100
-#                    and  (rotations, <rotations>) where rotations is a list of n rotations
-#
 #      input:   parm having (key,value): ('op':'scramble'),
 #                    ('method', 'random'), and (n,3).
 #      output:  A dictionary having (status, 'scrambled <randomness>' where 0 <= randomness <= 100
@@ -912,7 +907,7 @@ class DispatchTest(unittest.TestCase):
 # Happy Path
 
     def test500_010_ShouldReturn100RandomnessNoRandomMoves(self):
-        queryString='op=scramble'
+        queryString='op=scramble&n=0'
         expectedStatus = 'scrambled 100'
         expectedRotations = []
         
@@ -937,7 +932,7 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('rotations',  resultDict)
         self.assertEqual(expectedRotations, resultDict['rotations'])
 
-    def test500_030_ShouldReturn100RandomnessOneRandomMove(self):
+    def test500_030_ShouldReturnHighRandomnessOneRandomMove(self):
         queryString='op=scramble&n=1'
         
         resultString = self.httpGetAndResponse(queryString)
@@ -946,7 +941,8 @@ class DispatchTest(unittest.TestCase):
         self.assertIn('status',  resultDict)
         resultStatus = resultDict['status'].split(' ')
         self.assertEqual('scrambled', resultStatus[0])
-        self.assertIn(resultStatus[1], [str(i) for i in range(101)])
+        # An odd number of moves cannot result in a solved cube
+        self.assertIn(resultStatus[1], [str(i) for i in range(100)])
         
         self.assertIn('rotations',  resultDict)
         resultRotations = resultDict['rotations']
